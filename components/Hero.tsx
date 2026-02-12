@@ -37,9 +37,9 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             {/* Hero Image — full viewport width, no gutters, no clipping */}
             <div className="absolute inset-0">
               <picture>
-                <source media="(min-width: 768px)" srcSet="/assets/hero-profile-laptop.webp" />
+                <source media="(min-width: 768px)" srcSet="/hero-profile-laptop.webp" />
                 <img
-                  src="/assets/hero-profile-laptop.webp"
+                  src="/hero-profile-laptop.webp"
                   alt="Shane Grant - Defence Security Professional"
                   className="w-full h-full object-cover object-[40%_top] sm:object-[50%_top]"
                 />
@@ -211,9 +211,9 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
                Fully independent of the 1280px rail. ── */}
           <div className="absolute top-0 right-0 bottom-0 w-[45%] overflow-hidden">
             <picture>
-              <source media="(min-width: 1024px)" srcSet="/assets/hero-profile-laptop.webp" />
+              <source media="(min-width: 1024px)" srcSet="/hero-profile-laptop.webp" />
               <img
-                src="/assets/hero-profile-laptop.webp"
+                src="/hero-profile-laptop.webp"
                 alt="Shane Grant - Defence Security Professional"
                 className="h-full w-full object-cover object-center"
               />
