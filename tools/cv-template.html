@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shane Grant — CV</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* ──────────────────────────────────────────────
+       INSTITUTIONAL MODERN CV — Design Tokens
+       Matches updated shanegrant.nz site palette
+    ────────────────────────────────────────────── */
+        :root {
+            --bg-page: #FFFFFF;
+            --bg-sidebar: #F6F6F4;
+            --charcoal: #161616;
+            --charcoal-light: #404040;
+            --army-green: #4B5320;
+            --battleship-gray: #757575;
+            --border-neutral: #E0E0E0;
+
+            --font-display: 'Manrope', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'Courier Prime', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-page);
+            color: var(--charcoal);
+            font-size: 10px;
+            /* Base size for print */
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 0;
+            position: relative;
+            background: var(--bg-page);
+            page-break-after: always;
+        }
+
+        /* ──── Header / Name Block ──── */
+        .header {
+            background: var(--charcoal);
+            color: #FFFFFF;
+            padding: 40px 48px 36px;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .name {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .role-pill {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+
+        .contact-row {
+            display: flex;
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-body);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .contact-item .material-icons {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ──── Layout Grid ──── */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            min-height: calc(297mm - 160px);
+            /* Adjust based on header height */
+        }
+
+        .main-col {
+            padding: 40px 48px;
+            background: #FFFFFF;
+        }
+
+        .side-col {
+            padding: 40px 32px;
+            background: var(--bg-sidebar);
+            border-left: 1px solid var(--border-neutral);
+        }
+
+        /* ──── Section Styling ──── */
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-neutral);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--charcoal);
+        }
+
+        .section-icon {
+            font-size: 16px;
+            color: var(--battleship-gray);
+        }
+
+        /* ──── Profile Text ──── */
+        .profile-text {
+            color: var(--charcoal-light);
+            text-align: justify;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .profile-text strong {
+            color: var(--charcoal);
+            font-weight: 700;
+        }
+
+        /* ──── Experience Entry ──── */
+        .exp-entry {
+            margin-bottom: 24px;
+            position: relative;
+            padding-left: 20px;
+            /* Space for timeline line */
+        }
+
+        /* Timeline Line */
+        .exp-entry::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: -24px;
+            /* Extend to next item */
+            width: 1px;
+            background: var(--border-neutral);
+        }
+
+        .exp-entry:last-child::before {
+            bottom: 6px;
+            /* Stop line at last bullet */
+        }
+
+        /* Timeline Dot */
+        .exp-entry::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            /* Center on 1px line */
+            top: 6px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--charcoal);
+            border: 1px solid #FFFFFF;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .exp-role {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--charcoal);
+            letter-spacing: -0.01em;
+        }
+
+        .exp-period {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--battleship-gray);
+            font-weight: 500;
+        }
+
+        .exp-org {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--battleship-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .exp-duties {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exp-duties li {
+            position: relative;
+            padding-left: 12px;
+            margin-bottom: 4px;
+            font-size: 9.5px;
+            color: var(--charcoal-light);
+        }
+
+        .exp-duties li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--battleship-gray);
+        }
+
+        /* Sub-duties styling */
+        .exp-duties li.sub-duty {
+            padding-left: 24px;
+            font-style: italic;
+            color: var(--battleship-gray);
+        }
+
+        /* ──── Sidebar Items ──── */
+        .side-section {
+            margin-bottom: 32px;
+        }
+
+        .side-header {
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-neutral);
+        }
+
+        /* Attributes / Qualifications */
+        .attr-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .attr-icon {
+            font-size: 14px;
+            color: var(--battleship-gray);
+        }
+
+        .attr-text {
+            font-size: 9.5px;
+            font-weight: 500;
+            color: var(--charcoal-light);
+        }
+
+        /* Capability List */
+        .cap-item {
+            margin-bottom: 8px;
+            font-size: 9.5px;
+            line-height: 1.4;
+            color: var(--charcoal-light);
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .cap-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 3px;
+            height: 3px;
+            background: var(--battleship-gray);
+            border-radius: 50%;
+        }
+
+        /* Qualifications */
+        .qual-item {
+            margin-bottom: 12px;
+        }
+
+        .qual-title {
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 2px;
+        }
+
+        .qual-detail {
+            font-size: 9px;
+            color: var(--battleship-gray);
+        }
+
+        /* References */
+        .ref-item {
+            margin-bottom: 16px;
+        }
+
+        .ref-name {
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .ref-title {
+            font-size: 9px;
+            color: var(--battleship-gray);
+            margin-bottom: 2px;
+            font-style: italic;
+        }
+
+        .ref-contact {
+            font-family: var(--font-mono);
+            font-size: 8.5px;
+            color: var(--charcoal-light);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <!-- ──── HEADER ──── -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="name">Shane Grant</h1>
+                    <span class="role-pill">Security & Protective Services Professional</span>
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <span class="material-icons">place</span>
+                            Paraparaumu, NZ
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-icons">phone</span>
+                            021 210 9665
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-icons">email</span>
+                            grantshane411@gmail.com
+                        </div>
+                    </div>
+                </div>
+                <!-- Optional: Add a subtle logo/icon or keep clean -->
+            </div>
+        </div>
+
+        <!-- ──── CONTENT GRID ──── -->
+        <div class="content-grid">
+            <!-- MAIN COLUMN -->
+            <div class="main-col">
+
+                <!-- Profile -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="material-icons section-icon">person</span>
+                        <span class="section-title">Professional Profile</span>
+                    </div>
+                    <p class="profile-text">
+                        I am a defence-experienced security professional with <strong>over 30 years of service</strong>
+                        within New Zealand Defence Force environments, including Regular Force, Territorial Force, and
+                        on-site Security Guard roles at Trentham Military Camp. I bring a calm, disciplined, and
+                        procedurally precise approach to security operations, developed through sustained exposure to
+                        military culture, controlled access environments, VIP protection, and sensitive material
+                        handling. I am trusted to work unsupervised, apply Standard Operating Procedures, exercise
+                        lawful authority when required, and represent the Defence Force with professionalism,
+                        discretion, and integrity.
+                    </p>
+                </div>
+
+                <!-- Experience -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="material-icons section-icon">shield</span>
+                        <span class="section-title">Security & Defence Experience</span>
+                    </div>
+
+                    <!-- Security Guard -->
+                    <div class="exp-entry">
+                        <div class="exp-header">
+                            <span class="exp-role">Security Guard</span>
+                            <span class="exp-period">2012 – 2020</span>
+                        </div>
+                        <div class="exp-org">New Zealand Defence Force — Trentham Military Camp</div>
+                        <ul class="exp-duties">
+                            <li>Provided 24/7 physical security for a live NZDF military installation.</li>
+                            <li>Operated as primary access-control authority at main entry points.</li>
+                            <li>Conducted foot and mobile patrols across restricted buildings and training areas.</li>
+                            <li>Monitored CCTV, alarms, and electronic access systems.</li>
+                            <li>Responded to after-hours incidents, alarms, and emergency call-outs.</li>
+                            <li>Managed visitor, contractor, and staff access in accordance with SOPs.</li>
+                            <li>Maintained secure custody of keys, sensitive information, and restricted areas.</li>
+                            <li>Performed reception security and front-counter duties requiring professional engagement.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lance Corporal -->
+                    <div class="exp-entry">
+                        <div class="exp-header">
+                            <span class="exp-role">Lance Corporal</span>
+                            <span class="exp-period">2004 – 2010</span>
+                        </div>
+                        <div class="exp-org">Royal NZ Army Logistic Regiment</div>
+                        <ul class="exp-duties">
+                            <li>Delivered logistical support operations within Defence environments.</li>
+                            <li>Assigned to VIP Support Driver duties, responsible for:</li>
+                            <li class="sub-duty">Secure transport of senior officials and dignitaries</li>
+                            <li class="sub-duty">High standards of discretion, punctuality, and presentation</li>
+                            <li>Maintained and prepared NZDF VIP vehicle fleet.</li>
+                            <li>Operated under strict procedural and behavioural standards.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Territorial Force -->
+                    <div class="exp-entry">
+                        <div class="exp-header">
+                            <span class="exp-role">Territorial Force</span>
+                            <span class="exp-period">1990 – 2004</span>
+                        </div>
+                        <div class="exp-org">RNZIR & Engineers</div>
+                        <ul class="exp-duties">
+                            <li>Served across multiple operational and support units, including:</li>
+                            <li class="sub-duty">Support Fire Machine Gun Platoon & Reconnaissance Platoon</li>
+                            <li class="sub-duty">Assault Pioneers (2 Engineer Regiment)</li>
+                            <li>Trained in field engineering, demolitions, NBC procedures, FIBUA, and RHIB operations.
+                            </li>
+                            <li>Later attached to Quartermaster Platoon, acting in supply and stores roles.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDE COLUMN -->
+            <div class="side-col">
+
+                <!-- Core Capabilities -->
+                <div class="side-section">
+                    <div class="side-header">Core Capabilities</div>
+                    <div class="cap-item">Access Control & Perimeter Security</div>
+                    <div class="cap-item">SOP-Driven Operations</div>
+                    <div class="cap-item">CCTV & Electronic Monitoring</div>
+                    <div class="cap-item">Incident Reporting & Documentation</div>
+                    <div class="cap-item">Conflict De-escalation</div>
+                    <div class="cap-item">VIP Protection & Driving</div>
+                    <div class="cap-item">Secure Asset Handling</div>
+                    <div class="cap-item">Radio Comms (VHF)</div>
+                    <div class="cap-item">Independent Decision Making</div>
+                </div>
+
+                <!-- Qualifications -->
+                <div class="side-section">
+                    <div class="side-header">Qualifications</div>
+                    <div class="qual-item">
+                        <div class="qual-title">NZ Certificate L4 (Music)</div>
+                        <div class="qual-detail">Southern Institute of Tech</div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-title">NZDF Security Vetting</div>
+                        <div class="qual-detail">SECRET (Previously Held)</div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-title">Class 1 Driver Licence</div>
+                        <div class="qual-detail">Full Clean Licence</div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-title">First Aid Certified</div>
+                        <div class="qual-detail">Current Certification</div>
+                    </div>
+                </div>
+
+                <!-- Attributes -->
+                <div class="side-section">
+                    <div class="side-header">Attributes</div>
+                    <div class="attr-item">
+                        <span class="material-icons attr-icon">psychology</span>
+                        <span class="attr-text">Calm Under Pressure</span>
+                    </div>
+                    <div class="attr-item">
+                        <span class="material-icons attr-icon">gavel</span>
+                        <span class="attr-text">Disciplined & Reliable</span>
+                    </div>
+                    <div class="attr-item">
+                        <span class="material-icons attr-icon">verified</span>
+                        <span class="attr-text">High Integrity</span>
+                    </div>
+                    <div class="attr-item">
+                        <span class="material-icons attr-icon">fitness_center</span>
+                        <span class="attr-text">Physically Resilient</span>
+                    </div>
+                </div>
+
+                <!-- References -->
+                <div class="side-section">
+                    <div class="side-header">References</div>
+                    <div class="ref-item">
+                        <div class="ref-name">Antonio Mercuri</div>
+                        <div class="ref-title">Tutor, SIT</div>
+                        <div class="ref-contact">027 418 5486</div>
+                        <div class="ref-contact">antonio.mercuri@sit.ac.nz</div>
+                    </div>
+                    <div class="ref-item">
+                        <div class="ref-name">Rick Henderson</div>
+                        <div class="ref-title">Band Master</div>
+                        <div class="ref-contact">027 239 0884</div>
+                        <div class="ref-contact">rick@rhgc.co.nz</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

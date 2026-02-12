@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Shane Grant // Security Consultant</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // INSTITUTIONAL PROFESSIONAL PALETTE
+                        "off-white": "#F6F6F4", // Warm institutional neutral
+                        "charcoal": "#161616", // Deep charcoal - Primary Text
+                        "charcoal-light": "#404040", // Secondary Text
+                        "army-green": "#4B5320", // Reserved Accent
+                        "army-green-light": "#5D662E", // Hover State
+                        "battleship-gray": "#757575", // Neutral tertiary
+                        "alert-red": "#A31621", // Formal Alert (Crimson)
+                        "border-neutral": "#E0E0E0", // 1px neutral border
+
+                        // Legacy Mappings
+                        "primary": "#4B5320",
+                        "tech-green": "#4B5320",
+                        "night": "#161616",
+                        "night-paper": "#F6F6F4",
+                        "tech-dark": "#161616",
+                        "tech-gray": "#757575",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "header": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["Courier Prime", "monospace"],
+                        "tech": ["Inter", "sans-serif"], // Neutralized tech font
+                        "code": ["Fira Code", "monospace"],
+                    },
+                    borderRadius: { "DEFAULT": "2px", "sm": "1px", "lg": "4px", "xl": "6px", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Institutional Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F0F0F0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #BBBBBB;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999999;
+        }
+
+        /* Removed Tech Border Corner */
+
+        /* Removed Scan Lines */
+
+        /* Subtle Grid - Minimal */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+        }
+
+        .hero-grid-bg {
+            background-size: 80px 80px;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        }
+
+        /* Document Panel - Clean, Professional */
+        .glass-panel {
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .glass-panel:hover {
+            border-color: #BDBDBD;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Simple Fade In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* UX Pro Max Motion */
+        .scroll-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .scroll-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delays */
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+    </style>
+
+</head>
+
+<body
+    class="bg-off-white text-charcoal font-body min-h-screen flex flex-col antialiased selection:bg-charcoal selection:text-white relative overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
