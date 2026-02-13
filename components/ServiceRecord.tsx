@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { SERVICE_RECORD } from '../constants';
 import { ServiceRole } from '../types';
 import FadeIn from './FadeIn';
+import HolographicCard from './ui/holographic-card';
 
 const ServiceRecord: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<ServiceRole | null>(null);
@@ -24,6 +26,19 @@ const ServiceRecord: React.FC = () => {
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
+
+  // Timeline scroll animation
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
     <section className="py-24 bg-off-white relative overflow-hidden" id="experience">
@@ -49,9 +64,18 @@ const ServiceRecord: React.FC = () => {
         </FadeIn>
 
         {/* Timeline Structure */}
-        <div className="space-y-12 relative">
-          {/* Timeline Line */}
+        <div ref={containerRef} className="space-y-12 relative">
+          {/* Timeline Line Base */}
           <div className="absolute left-4 md:left-[140px] top-4 bottom-4 w-px bg-border-neutral md:block hidden"></div>
+
+          {/* Animated Timeline Line */}
+          <motion.div
+            className="absolute left-4 md:left-[140px] top-4 bottom-4 w-px bg-charcoal origin-top md:block hidden z-10"
+            style={{ scaleY }}
+          >
+            {/* Glowing Head */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-6 bg-gradient-to-t from-charcoal to-transparent opacity-50 blur-sm"></div>
+          </motion.div>
 
           {SERVICE_RECORD.map((record, index) => (
             <FadeIn key={record.id} delay={(index * 100 % 400) as any} className="relative md:pl-[180px] group">
@@ -62,8 +86,14 @@ const ServiceRecord: React.FC = () => {
                 </span>
               </div>
 
-              {/* Timeline Node */}
-              <div className={`hidden md:block absolute left-[136px] top-8 w-2 h-2 rounded-full z-10 transition-all duration-300 ${index === 0 ? 'bg-charcoal ring-4 ring-off-white' : 'bg-gray-300 group-hover:bg-charcoal'}`}></div>
+              {/* Timeline Node - Animated */}
+              <motion.div
+                initial={{ backgroundColor: '#D1D5DB', scale: 0.8 }} // gray-300
+                whileInView={{ backgroundColor: '#2c3035', scale: 1 }} // charcoal
+                viewport={{ margin: "-100px 0px -100px 0px" }}
+                transition={{ duration: 0.4 }}
+                className={`hidden md:block absolute left-[136px] top-8 w-2 h-2 rounded-full z-20 ring-4 ring-off-white`}
+              ></motion.div>
 
               {/* Mobile Date */}
               <div className="md:hidden flex items-center gap-4 mb-4 ml-4">
@@ -72,7 +102,7 @@ const ServiceRecord: React.FC = () => {
               </div>
 
               {/* Service Card - Document Style */}
-              <div
+              <HolographicCard
                 onClick={() => openModal(record)}
                 className="glass-panel p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 bg-white cursor-pointer relative overflow-hidden group rounded-sm"
               >
@@ -105,7 +135,7 @@ const ServiceRecord: React.FC = () => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </HolographicCard>
             </FadeIn>
           ))}
         </div>

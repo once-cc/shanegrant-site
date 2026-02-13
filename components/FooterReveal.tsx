@@ -9,9 +9,9 @@ interface FooterRevealProps {
 
 const FooterReveal: React.FC<FooterRevealProps> = ({ children }) => {
     return (
-        <div className="absolute inset-x-0 top-0 z-0">
-            {/* Sticky Background */}
-            <div className="sticky top-0 h-dvh w-full">
+        <div className="absolute inset-0 z-0">
+            {/* Sticky Container — Background + Content */}
+            <div className="sticky top-0 h-dvh w-full overflow-hidden">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: `url("${footerKapiti}")` }}
@@ -22,11 +22,11 @@ const FooterReveal: React.FC<FooterRevealProps> = ({ children }) => {
                     className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none"
                     style={{ backgroundImage: `url("${DIGITAL_CAMO_URI}")` }}
                 ></div>
-            </div>
 
-            {/* Scroll Content */}
-            <div className="relative z-10">
-                {children}
+                {/* Sticky Content */}
+                <div className="relative z-10 h-full w-full overflow-y-auto">
+                    {children}
+                </div>
             </div>
         </div>
     );

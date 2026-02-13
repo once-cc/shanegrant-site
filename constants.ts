@@ -1,4 +1,4 @@
-import { Award, Competency, ProfileStat, ServiceRole, Reference, PersonalAttribute } from './types';
+import { Accolade, Award, Competency, ProfileStat, ServiceRole, Reference, PersonalAttribute } from './types';
 import { Music, ShieldCheck, Car, BriefcaseMedical } from 'lucide-react';
 
 // Source: assets/c.v
@@ -118,7 +118,7 @@ export const SERVICE_RECORD: ServiceRole[] = [
   }
 ];
 
-export const CITATIONS: Award[] = [ // Renamed from AWARDS to align better with Qualifications
+export const CITATIONS: Award[] = [
   {
     id: '1',
     title: 'NZ Certificate Level 4',
@@ -175,10 +175,10 @@ export const DIGITAL_CAMO_URI = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 
 export const CONCRETE_TEXTURE_URI = "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E";
 
-export const ACCOLADES = [
+export const ACCOLADES: Accolade[] = [
+  { id: 'territorial', title: 'Territorial Force', src: '/accolades/territorial.webp' },
   { id: 'ccci', title: 'CCCI Coin', src: '/accolades/ccci.webp' },
   { id: 'chief', title: 'Chief of Army Coin', src: '/accolades/chief.webp' },
-  { id: 'elizabeth', title: 'Elizabeth Medal', src: '/accolades/elizabeth.webp' },
   { id: 'ngati', title: 'Ngāti Tūmatauenga', src: '/accolades/ngati.webp' },
-  { id: 'territorial', title: 'Territorial Force', src: '/accolades/territorial.webp' },
-];
+  { id: 'elizabeth', title: 'Elizabeth Medal', src: '/accolades/elizabeth.webp' },
+] as const;

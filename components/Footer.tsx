@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Mail, Phone } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ACCOLADES, CONTACT_DETAILS } from '../constants';
 
@@ -32,16 +32,16 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
   return (
     <section className={cn("relative w-full mt-0 overflow-hidden")}>
       <footer className="border-t border-white/30 bg-white/20 backdrop-blur-md mt-0 relative">
-        <div className="max-w-7xl flex flex-col justify-between mx-auto min-h-[30rem] sm:min-h-[35rem] md:min-h-[40rem] relative p-4 py-10">
-          <div className="flex flex-col mb-12 sm:mb-20 md:mb-0 w-full">
+        <div className="max-w-7xl flex flex-col justify-start items-center mx-auto min-h-[22rem] sm:min-h-[30rem] md:min-h-[35rem] relative p-4 py-6 md:py-8 pb-32 md:pb-48">
+          <div className="flex flex-col w-full items-center">
             <div className="w-full flex flex-col items-center">
               <div className="space-y-2 flex flex-col items-center flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-white text-3xl font-bold font-display">
+                  <span className="text-white/50 text-3xl font-bold font-display">
                     SHANE GRANT
                   </span>
                 </div>
-                <p className="text-white font-semibold text-center w-full max-w-sm sm:w-96 px-4 sm:px-0">
+                <p className="text-white/50 font-semibold text-center w-full max-w-sm sm:w-96 px-4 sm:px-0">
                   Security Consultant — NZDF Veteran — Tactical Operations Specialist
                 </p>
               </div>
@@ -52,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
                   <Link
                     key={index}
                     href={link.href}
-                    className="text-white hover:text-white/80 transition-colors"
+                    className="text-white/50 hover:text-white transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -65,11 +65,11 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
               </div>
 
               {/* Navigation Links with CV Download */}
-              <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-charcoal-light max-w-full px-4">
+              <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-white/50 max-w-full px-4">
                 {navLinks.map((link, index) => (
                   <a
                     key={index}
-                    className="text-white hover:text-white/80 duration-300 hover:font-semibold cursor-pointer"
+                    className="text-white/50 hover:text-white duration-300 hover:font-semibold cursor-pointer"
                     href={link.href}
                     onClick={(e) => {
                       if (link.onClick) {
@@ -90,60 +90,60 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
                     key={`footer-main-${accolade.id}`}
                     src={accolade.src}
                     alt={accolade.title}
-                    className="h-8 w-auto opacity-70 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 drop-shadow-md"
-                    title={accolade.title}
+                    className="h-11 w-11 md:h-12 md:w-12 opacity-90 hover:opacity-100 transition-opacity duration-300"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ))}
               </div>
-            </div>
-          </div>
 
-          <div className="mt-20 md:mt-24 flex flex-col gap-2 md:gap-1 items-center justify-center md:flex-row md:items-center md:justify-between px-4 md:px-0 relative z-20">
-            <p className="text-base text-charcoal text-center md:text-left">
-              ©{new Date().getFullYear()} Shane Grant. All rights reserved.
-            </p>
-            <nav className="flex gap-4">
-              <Link
-                href="https://cleland.studio"
-                target="_blank"
-                className="text-base text-charcoal hover:text-army-green transition-colors duration-300 hover:font-medium"
-              >
-                Crafted by Cleland Studios
-              </Link>
-            </nav>
+              <div className="flex flex-col gap-2 items-center justify-center mt-8 relative z-20">
+                <p className="text-white/50 font-semibold text-center text-sm">
+                  ©{new Date().getFullYear()} Shane Grant. All rights reserved.
+                </p>
+                <nav className="flex gap-4">
+                  <Link
+                    href="https://cleland.studio"
+                    target="_blank"
+                    className="text-white/50 font-semibold hover:text-white transition-colors duration-300 text-sm"
+                  >
+                    Crafted by Cleland Studios
+                  </Link>
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Large background text */}
+        {/* Large background text - Emerging from bottom */}
         <div
-          className="bg-gradient-to-b from-white/40 via-white/20 to-transparent bg-clip-text text-transparent leading-none absolute left-1/2 -translate-x-1/2 bottom-40 md:bottom-32 font-extrabold tracking-tighter pointer-events-none select-none text-center px-4 w-full whitespace-nowrap"
+          className="text-white/5 leading-none absolute left-1/2 -translate-x-1/2 bottom-6 md:bottom-0 font-extrabold tracking-tighter pointer-events-none select-none text-center px-4 w-full whitespace-nowrap z-0"
           style={{
-            fontSize: 'clamp(4rem, 15vw, 12rem)',
+            fontSize: 'clamp(3rem, 15vw, 13rem)',
             maxWidth: '100vw'
           }}
         >
           TALK SOON
         </div>
 
-        {/* Bottom logo */}
-        <div className="absolute hover:border-army-green duration-400 drop-shadow-[0_0px_20px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0px_20px_rgba(255,255,255,0.3)] bottom-24 md:bottom-20 backdrop-blur-sm rounded-3xl bg-white/60 left-1/2 border-2 border-border-neutral flex items-center justify-center p-3 -translate-x-1/2 z-10">
-          <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 rounded-2xl overflow-hidden shadow-lg relative">
+        {/* Bottom logo - Optimized */}
+        <div className="absolute hover:border-army-green duration-400 drop-shadow-[0_0px_20px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0px_20px_rgba(255,255,255,0.3)] bottom-8 md:bottom-12 backdrop-blur-sm rounded-3xl bg-white/60 left-1/2 border-2 border-border-neutral items-center justify-center p-3 -translate-x-1/2 z-10 hidden md:flex w-auto h-auto">
+          <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-lg relative">
             <img
-              src="/footer-profile.webp"
+              src="/footer-profile-optimized.webp"
               alt="Shane Grant"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
+              width="96"
+              height="96"
             />
           </div>
         </div>
 
-        {/* Bottom line */}
-        <div className="absolute bottom-32 sm:bottom-34 backdrop-blur-sm h-1 bg-gradient-to-r from-transparent via-border-neutral to-transparent w-full left-1/2 -translate-x-1/2"></div>
-
-        {/* Bottom gradient overlay - creates emerging effect for TALK SOON */}
-        <div className="bg-gradient-to-t from-white via-white to-transparent absolute bottom-0 w-full h-64 pointer-events-none"></div>
-
-        {/* Bottom solid base */}
-        <div className="bg-white absolute bottom-0 w-full h-32"></div>
+        {/* Controlled Dark Grounding Gradient */}
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-black/50 to-black/80" />
       </footer>
     </section>
   );

@@ -35,22 +35,28 @@ const Header: React.FC<HeaderProps> = ({ onDownloadCV }) => {
             <nav className="flex space-x-8 text-sm font-body uppercase tracking-wider text-battleship-gray font-medium">
               <a className="hover:text-charcoal transition-colors duration-200" href="#profile">Profile</a>
               <a className="hover:text-charcoal transition-colors duration-200" href="#experience">Service Record</a>
-              <a className="hover:text-charcoal transition-colors duration-200" href="#skills">Commendations</a>
+              <a className="hover:text-charcoal transition-colors duration-200" href="#commendations">Commendations</a>
             </nav>
 
             <div className="h-4 w-px bg-border-neutral"></div>
 
             <button
               onClick={onDownloadCV}
-              className="text-charcoal hover:text-charcoal-light px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 flex items-center gap-2 cursor-pointer"
+              className="group relative text-charcoal hover:text-white px-4 py-2 text-xs font-bold uppercase tracking-widest overflow-hidden rounded-sm transition-all duration-300 flex items-center gap-2 cursor-pointer"
             >
-              <span className="material-icons text-sm">download</span>
-              CV
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="material-icons text-sm">download</span>
+                CV
+              </span>
+              <div className="absolute inset-0 bg-charcoal transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
             </button>
 
-            <a className="bg-charcoal text-white hover:bg-charcoal-light px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 shadow-sm rounded-sm flex items-center gap-2 group" href="#contact">
-              <span className="material-icons text-sm">wifi_tethering</span>
-              Contact
+            <a className="group relative bg-charcoal text-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest overflow-hidden rounded-sm hover:shadow-lg transition-all duration-300 flex items-center gap-2" href="#contact">
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="material-icons text-sm">wifi_tethering</span>
+                Contact
+              </span>
+              <div className="absolute inset-0 bg-charcoal-light transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
             </a>
           </div>
         </div>

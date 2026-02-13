@@ -1,5 +1,5 @@
 import React from 'react';
-import { DIGITAL_CAMO_URI, PROFILE_STATS, ACCOLADES } from '../constants';
+import { DIGITAL_CAMO_URI, ACCOLADES } from '../constants';
 import { InfiniteSlider } from './AccoladeCarousel';
 
 interface HeroProps {
@@ -45,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
                 />
               </picture>
               {/* Bottom gradient fade — full width */}
-              <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-off-white via-off-white/60 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-off-white to-transparent pointer-events-none z-10"></div>
             </div>
 
             {/* Text overlay — positioned with padding, sits on top of gradient */}
@@ -95,7 +95,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
               <div className="opacity-80 mix-blend-multiply">
                 <InfiniteSlider gap={28} duration={40} durationOnHover={100}>
                   {ACCOLADES.map((accolade) => (
-                    <div key={accolade.id} className="relative group w-14 sm:w-16" title={accolade.title}>
+                    <div key={accolade.id} className="relative group w-14 sm:w-16">
                       <img
                         src={accolade.src}
                         alt={accolade.title}
@@ -169,7 +169,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
                     <div className="opacity-80 mix-blend-multiply">
                       <InfiniteSlider gap={32} duration={40} durationOnHover={100}>
                         {ACCOLADES.map((accolade) => (
-                          <div key={accolade.id} className="relative group w-16 md:w-20" title={accolade.title}>
+                          <div key={accolade.id} className="relative group w-16 md:w-20">
                             <img
                               src={accolade.src}
                               alt={accolade.title}

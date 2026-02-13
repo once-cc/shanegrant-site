@@ -25,10 +25,10 @@ const App: React.FC = () => {
         <Competencies />
         <ServiceRecord />
         {/* Layered Reveal Container */}
-        <div className="relative min-h-[200vh]">
+        <div className="relative">
           {/* 1. Footer Background Layer (Sticky) */}
           <FooterReveal>
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="flex items-center justify-center py-8 md:min-h-screen md:py-0">
               <Contact />
             </div>
             <Footer onDownloadCV={handleOpenCV} />
@@ -38,8 +38,11 @@ const App: React.FC = () => {
           <section className="relative z-20 bg-off-white">
             <Honours />
           </section>
+
+          {/* 3. Reveal Spacer - Creates the window for the footer to show */}
+          <div className="h-[100dvh] w-full pointer-events-none" />
         </div>
-      </main>
+      </main >
       <CVDownloadModal isOpen={isCVModalOpen} onClose={handleCloseCV} />
     </>
   );

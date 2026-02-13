@@ -56,21 +56,22 @@
             padding: 0;
             position: relative;
             background: var(--bg-page);
-            page-break-after: always;
+            overflow: hidden;
+            /* Force single page */
         }
 
         /* ──── Header / Name Block ──── */
         .header {
             background: var(--charcoal);
             color: #FFFFFF;
-            padding: 40px 48px 36px;
+            padding: 24px 48px 16px;
             position: relative;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
         }
 
         .name {
@@ -94,13 +95,13 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .contact-row {
             display: flex;
             gap: 24px;
-            margin-top: 8px;
+            margin-top: 4px;
         }
 
         .contact-item {
@@ -127,19 +128,19 @@
         }
 
         .main-col {
-            padding: 40px 48px;
+            padding: 32px 48px;
             background: #FFFFFF;
         }
 
         .side-col {
-            padding: 40px 32px;
+            padding: 32px 32px;
             background: var(--bg-sidebar);
             border-left: 1px solid var(--border-neutral);
         }
 
         /* ──── Section Styling ──── */
         .section {
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
 
         .section-header {
@@ -180,7 +181,7 @@
 
         /* ──── Experience Entry ──── */
         .exp-entry {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             position: relative;
             padding-left: 20px;
             /* Space for timeline line */
@@ -277,7 +278,7 @@
 
         /* ──── Sidebar Items ──── */
         .side-section {
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
 
         .side-header {
@@ -297,7 +298,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .attr-icon {
@@ -313,7 +314,7 @@
 
         /* Capability List */
         .cap-item {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-size: 9.5px;
             line-height: 1.4;
             color: var(--charcoal-light);
@@ -334,7 +335,7 @@
 
         /* Qualifications */
         .qual-item {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .qual-title {
@@ -352,7 +353,7 @@
 
         /* References */
         .ref-item {
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
 
         .ref-name {
@@ -400,7 +401,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Optional: Add a subtle logo/icon or keep clean -->
+                <!-- Hero Image -->
+                <div class="header-right" style="margin-left: auto; padding-left: 20px;">
+                    <img src="../public/hero-profile-laptop.webp" alt="Shane Grant" style="
+                        width: 180px;
+                        height: 180px;
+                        object-fit: cover;
+                        object-position: top center;
+                        border-radius: 50%;
+                    ">
+                </div>
             </div>
         </div>
 
@@ -408,7 +418,6 @@
         <div class="content-grid">
             <!-- MAIN COLUMN -->
             <div class="main-col">
-
                 <!-- Profile -->
                 <div class="section">
                     <div class="section-header">

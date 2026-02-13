@@ -27,8 +27,9 @@ const Competencies: React.FC = () => {
         <FadeIn>
           <div className="mb-16">
             <div className="flex items-center gap-4 mb-6">
+              <div className="h-px bg-border-neutral flex-1"></div>
               <span className="text-battleship-gray font-body font-bold tracking-widest text-xs uppercase">Core Capabilities</span>
-              <div className="h-px bg-border-neutral w-full max-w-[100px]"></div>
+              <div className="h-px bg-border-neutral w-16"></div>
             </div>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-charcoal tracking-tight mb-6">
               Operational Competencies

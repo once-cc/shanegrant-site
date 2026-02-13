@@ -29,3 +29,7 @@ skills/
 .env
 .env.*
 !.env.example
+
+# Temp / build artifacts
+.tmp/
+architecture/

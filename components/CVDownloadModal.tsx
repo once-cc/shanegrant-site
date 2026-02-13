@@ -173,7 +173,6 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                             key={`modal-accolade-${item.id}`}
                                             className={`relative transform transition-all duration-300 hover:scale-110 hover:z-50 ${index % 2 === 0 ? 'translate-y-1' : '-translate-y-1'}`}
                                             style={{ marginLeft: index === 0 ? 0 : '-12px' }}
-                                            title={item.title}
                                         >
                                             <img
                                                 src={item.src}

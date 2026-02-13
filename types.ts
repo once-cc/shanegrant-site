@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react';
 
 export interface Competency {
   id: string;
@@ -39,4 +40,10 @@ export interface Reference {
 export interface PersonalAttribute {
   title: string;
   subtitle: string;
+}
+
+export interface Accolade {
+  id: string;
+  title: string;
+  src: string;
 }
