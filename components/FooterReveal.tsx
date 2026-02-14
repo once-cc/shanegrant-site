@@ -10,12 +10,12 @@ interface FooterRevealProps {
 /**
  * FooterReveal — Pure document-flow wrapper.
  * 
- * No internal scroll contexts. No sticky. No transforms. No will-change.
+ * No internal scroll contexts. No transforms. No will-change.
  * Just a relative container with decorative background layers.
  * 
  * The sticky footer effect is achieved by the Footer component itself
- * using `position: sticky; bottom: 0` — handled at the component level,
- * not the wrapper level.
+ * using `lg:sticky lg:bottom-0` — DESKTOP ONLY (≥1024px).
+ * Mobile (< 1024px) uses natural document scroll.
  */
 const FooterReveal: React.FC<FooterRevealProps> = ({ children }) => {
     return (

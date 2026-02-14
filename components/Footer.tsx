@@ -30,9 +30,13 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
   ];
 
   return (
-    <section className={cn("sticky bottom-0 w-full mt-0 z-0")}>
+    <section className={cn(
+      "w-full mt-0 z-0",
+      // Sticky ONLY on desktop (≥1024px) — mobile uses natural document scroll
+      "lg:sticky lg:bottom-0"
+    )}>
       <footer className="border-t border-white/30 bg-white/20 backdrop-blur-md mt-0 relative">
-        <div className="max-w-7xl flex flex-col justify-start items-center mx-auto min-h-[22rem] sm:min-h-[30rem] md:min-h-[35rem] relative p-4 py-6 md:py-8 pb-32 md:pb-48">
+        <div className="max-w-7xl flex flex-col justify-start items-center mx-auto min-h-[18rem] lg:min-h-[30rem] xl:min-h-[35rem] relative p-4 py-6 md:py-8 pb-32 md:pb-48">
           <div className="flex flex-col w-full items-center">
             <div className="w-full flex flex-col items-center">
               <div className="space-y-2 flex flex-col items-center flex-1">

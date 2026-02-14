@@ -149,7 +149,8 @@ const ServiceRecord: React.FC = () => {
                   onClick={() => openModal(record)}
                   className={cn(
                     "glass-panel p-8 cursor-pointer relative overflow-hidden group rounded-sm",
-                    "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
+                    "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    // will-change removed — browser auto-promotes compositing layers when needed
                     activeIndex === index && "scale-[1.02] shadow-[0_40px_120px_rgba(0,0,0,0.25)] z-10"
                   )}
                 >

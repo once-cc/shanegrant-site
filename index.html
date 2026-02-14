@@ -267,6 +267,30 @@
                 will-change: opacity, transform;
             }
         }
+
+        /* ═════════════════════════════════════════════════════════
+           MOBILE WEBKIT STABILITY (iOS Safari/Chrome)
+           Touch-first scroll architecture — single document scroll
+        ═════════════════════════════════════════════════════════ */
+        @media (hover: none) and (pointer: coarse) {
+
+            /* Disable contain on mobile — prevents sticky conflicts */
+            section {
+                contain: none;
+            }
+
+            /* Force natural scroll behavior on touch devices */
+            html,
+            body {
+                overscroll-behavior-y: auto;
+                scroll-snap-type: none;
+            }
+
+            /* Prevent any residual scroll locking */
+            * {
+                scroll-snap-align: none;
+            }
+        }
     </style>
 
 </head>

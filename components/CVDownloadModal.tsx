@@ -199,7 +199,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                             <img
                                                 src={item.src}
                                                 alt={item.title}
-                                                className="h-14 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.15)] opacity-92 scale-98"
+                                                className="h-11 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.15)] opacity-92 scale-98"
                                             />
                                         </div>
                                     ))}

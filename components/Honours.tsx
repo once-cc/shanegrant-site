@@ -59,7 +59,7 @@ const Honours: React.FC = () => {
                     <img
                       src={item.src}
                       alt={item.title}
-                      className="h-16 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                      className="h-12 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
                       loading="lazy"
                       decoding="async"
                     />

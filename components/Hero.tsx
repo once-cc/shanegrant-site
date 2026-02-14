@@ -26,22 +26,22 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             MOBILE HERO — Only visible below lg (< 1024px)
             Two-zone architecture for above/below fold separation
             ════════════════════════════════════════════════════ */}
-        <div className="lg:hidden flex flex-col h-[calc(100svh_-_5rem)] overflow-y-auto">
+        <div className="lg:hidden flex flex-col w-full overflow-x-hidden">
 
           {/* ── ZONE 1: ABOVE THE FOLD ──
                Full-bleed hero image with text overlay.
                Image spans viewport edge-to-edge — no clipping, no gutters.
                Text floats over the left portion with gradient protection. */}
-          <div className="relative flex-1 min-h-0">
+          <div className="relative h-[calc(100svh_-_5rem)] w-full">
 
             {/* Hero Image — full viewport width, no gutters, no clipping */}
-            <div className="absolute inset-0">
+            <div className="absolute top-0 right-0 bottom-0 w-[92%]">
               <picture>
                 <source media="(min-width: 768px)" srcSet="/hero-profile.webp" />
                 <img
                   src="/hero-profile.webp"
                   alt="Shane Grant - Defence Security Professional"
-                  className="w-full h-full object-cover object-[40%_top] sm:object-[50%_top]"
+                  className="w-full h-full object-cover object-[45%_top] sm:object-[50%_top]"
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             </div>
 
             {/* Personnel Profile Overlay — mobile */}
-            <div className="absolute bottom-8 right-4 z-20 text-right">
+            <div className="absolute bottom-20 right-4 z-20 text-right">
               <div className="text-white backdrop-blur-md bg-white/5 border border-white/10 px-3 py-2.5 rounded-sm shadow-2xl">
                 <p className="text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.15em] text-white/80 mb-0.5">Personnel Profile</p>
                 <h3 className="text-base sm:text-lg font-display font-bold text-white mb-0">Shane Grant</h3>
@@ -75,7 +75,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
           {/* ── ZONE 2: SUPPORTING CONTENT ──
                Compact content panel below image.
                flex-shrink-0 ensures it keeps its natural size while Zone 1 flexes. */}
-          <div className="flex-shrink-0 flex flex-col px-6 sm:px-8 pt-3 sm:pt-6 pb-4 sm:pb-6">
+          <div className="flex-shrink-0 flex flex-col px-6 sm:px-8 pt-20 pb-12">
 
             {/* Operational Status Pill */}
             <div className="inline-flex items-center space-x-3 mb-2 pl-1 pr-4 py-1 bg-white border border-border-neutral rounded-full shadow-sm w-fit">
