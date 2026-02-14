@@ -11,10 +11,13 @@ const FooterReveal: React.FC<FooterRevealProps> = ({ children }) => {
     return (
         <div className="absolute inset-0 z-0">
             {/* Sticky Container — Background + Content */}
-            <div className="sticky top-0 h-dvh w-full overflow-hidden">
+            <div className="sticky top-0 h-dvh w-full overflow-hidden will-change-transform">
                 <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url("${footerKapiti}")` }}
+                    className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
+                    style={{
+                        backgroundImage: `url("${footerKapiti}")`,
+                        willChange: 'opacity'
+                    }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
                 {/* Background Texture */}

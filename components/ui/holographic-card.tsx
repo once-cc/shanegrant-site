@@ -16,24 +16,16 @@ const HolographicCard: React.FC<HolographicCardProps> = ({ children, className, 
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        // Intensity of rotation
-        const rotateX = (y - centerY) / 60;
-        const rotateY = (centerX - x) / 60;
-
         card.style.setProperty('--x', `${x}px`);
         card.style.setProperty('--y', `${y}px`);
         card.style.setProperty('--bg-x', `${(x / rect.width) * 100}%`);
         card.style.setProperty('--bg-y', `${(y / rect.height) * 100}%`);
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     };
 
     const handleMouseLeave = () => {
         if (!cardRef.current) return;
         const card = cardRef.current;
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+
         card.style.setProperty('--x', `50%`);
         card.style.setProperty('--y', `50%`);
         card.style.setProperty('--bg-x', '50%');

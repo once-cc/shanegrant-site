@@ -11,6 +11,24 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
     const [isDownloading, setIsDownloading] = useState(false);
     const [downloadComplete, setDownloadComplete] = useState(false);
     const [activeTab, setActiveTab] = useState<'overview' | 'service' | 'quals'>('overview');
+    const [timelineHasAnimated, setTimelineHasAnimated] = useState(false);
+
+    // Initial animation trigger for service tab using requestAnimationFrame
+    useEffect(() => {
+        if (activeTab === 'service' && !timelineHasAnimated) {
+            requestAnimationFrame(() => {
+                setTimelineHasAnimated(true);
+            });
+        }
+    }, [activeTab, timelineHasAnimated]);
+
+    // Reset timeline animation and active tab on modal close
+    useEffect(() => {
+        if (!isOpen) {
+            setTimelineHasAnimated(false);
+            setActiveTab('overview');
+        }
+    }, [isOpen]);
 
     // Lock body scroll when modal is open
     useEffect(() => {
@@ -90,18 +108,43 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
             aria-label="Download CV"
         >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm animate-fade-in" />
+            <div className="absolute inset-0 bg-[rgba(10,14,20,0.45)] backdrop-blur-[16px] animate-fade-in" />
 
             {/* Modal Container */}
             <div
                 ref={modalRef}
-                className="relative z-10 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60 w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl animate-fade-in rounded-sm flex flex-col border border-white/20"
-                style={{ animationDuration: '0.3s' }}
+                className="relative z-10 w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-[20px] flex flex-col bg-[rgba(255,255,255,0.78)] backdrop-blur-[20px] border border-[rgba(255,255,255,0.35)] shadow-[0_10px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.6)] animate-fade-in origin-center modal-scroll"
+                style={{
+                    animationDuration: '0.14s',
+                    animationTimingFunction: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+                    animationName: 'scale-in'
+                }}
             >
+                <style>{`
+                    @keyframes scale-in {
+                        from { opacity: 0; transform: scale(0.98); }
+                        to { opacity: 1; transform: scale(1); }
+                    }
+                    /* Scrollbar Styling */
+                    .modal-scroll::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .modal-scroll::-webkit-scrollbar-track {
+                        background: transparent;
+                        border-radius: 3px;
+                    }
+                    .modal-scroll::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.2);
+                        border-radius: 3px;
+                    }
+                    .modal-scroll::-webkit-scrollbar-thumb:hover {
+                        background: rgba(0, 0, 0, 0.3);
+                    }
+                `}</style>
                 {/* ─── Professional Header ─── */}
-                <div className="bg-charcoal px-8 py-5 flex items-center justify-between border-b border-white/10">
+                <div className="px-5 py-6 sm:px-8 sm:py-8 flex items-center justify-between bg-gradient-to-b from-[rgba(15,20,28,0.75)] to-[rgba(15,20,28,0.55)] backdrop-blur-[24px] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] flex-shrink-0">
                     <div>
-                        <h2 className="text-xl font-display font-bold text-white tracking-tight">Curriculum Vitae</h2>
+                        <h2 className="text-xl font-display font-bold text-white tracking-[0.04em]">Curriculum Vitae</h2>
                         <p className="text-sm text-white/60 font-body font-medium mt-0.5">Shane Grant — Security Professional</p>
                     </div>
                     <button
@@ -114,7 +157,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                 </div>
 
                 {/* ─── Tab Navigation ─── */}
-                <div className="border-b border-border-neutral px-8 flex gap-8 bg-off-white/30">
+                <div className="border-b border-border-neutral px-5 sm:px-8 flex gap-8 bg-off-white/30 relative z-20 flex-shrink-0">
                     {([
                         { key: 'overview', label: 'Overview' },
                         { key: 'service', label: 'Service History' },
@@ -124,11 +167,11 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
                             className={`
-                py-4 text-xs font-bold uppercase tracking-wider cursor-pointer
-                border-b-2 transition-all duration-200
+                py-4 text-xs uppercase tracking-wider cursor-pointer
+                border-b-2 transition-all duration-120 ease-out
                 ${activeTab === tab.key
-                                    ? 'border-charcoal text-charcoal'
-                                    : 'border-transparent text-battleship-gray hover:text-charcoal'
+                                    ? 'border-charcoal text-charcoal font-bold border-b-[2px]'
+                                    : 'border-transparent text-battleship-gray hover:text-charcoal hover:tracking-[0.07em] hover:opacity-90 font-medium'
                                 }
               `}
                         >
@@ -138,11 +181,11 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                 </div>
 
                 {/* ─── Tab Content ─── */}
-                <div className="overflow-y-auto px-8 py-8 flex-grow bg-white" style={{ minHeight: '300px' }}>
+                <div className="relative bg-transparent">
 
                     {/* Overview Tab */}
                     {activeTab === 'overview' && (
-                        <div className="space-y-8 animate-fade-in">
+                        <div className="px-5 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 sm:gap-7">
                             {/* Profile Header */}
                             <div className="flex items-start gap-6">
                                 <div className="w-16 h-16 bg-charcoal rounded-sm flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -165,7 +208,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                             </div>
 
                             {/* Professional Summary */}
-                            <div className="bg-off-white p-6 rounded-sm border border-border-neutral relative overflow-visible">
+                            <div className="bg-off-white p-6 rounded-sm border border-border-neutral relative overflow-visible transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent">
                                 {/* Accolades Overlay - Restored */}
                                 <div className="absolute -top-6 -right-4 flex items-center z-20 pointer-events-auto">
                                     {ACCOLADES.map((item, index) => (
@@ -177,13 +220,13 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                             <img
                                                 src={item.src}
                                                 alt={item.title}
-                                                className="h-14 w-auto object-contain drop-shadow-md"
+                                                className="h-14 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.15)] opacity-92 scale-98"
                                             />
                                         </div>
                                     ))}
                                 </div>
                                 <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-4">Professional Profile</h4>
-                                <p className="text-base text-charcoal leading-relaxed font-body">
+                                <p className="text-base text-[#1A1A1A] leading-loose font-body">
                                     Defence-experienced security professional with <strong className="text-charcoal font-bold">30+ years</strong> of service within NZDF environments,
                                     including Regular Force, Territorial Force, and on-site Security Guard roles at Trentham Military Camp.
                                     Trusted to work unsupervised, apply Standard Operating Procedures, exercise lawful authority, and represent
@@ -198,7 +241,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                     {coreCapabilities.map((cap, i) => (
                                         <div
                                             key={cap}
-                                            className="flex items-center gap-2 bg-white border border-border-neutral px-3 py-2.5 rounded-sm"
+                                            className="flex items-center gap-2 bg-white border border-border-neutral px-3 py-2.5 rounded-sm transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent"
                                         >
                                             <span className="w-1.5 h-1.5 bg-charcoal rounded-full flex-shrink-0" />
                                             <span className="text-xs text-charcoal font-medium leading-tight">{cap}</span>
@@ -211,13 +254,27 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
 
                     {/* Service Record Tab */}
                     {activeTab === 'service' && (
-                        <div className="space-y-6 animate-fade-in">
+                        <div className="px-5 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 sm:gap-7">
                             <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-2">Defence & Security Timeline</h4>
-                            <div className="border-l border-border-neutral pl-8 space-y-8 relative">
+                            <div className="border-l border-transparent pl-6 sm:pl-8 flex flex-col gap-5 sm:gap-7 relative">
+                                {/* Vertical Line with Animation */}
+                                <div className="absolute left-0 top-1 bottom-0 w-px bg-transparent">
+                                    <div className="absolute inset-0 bg-border-neutral opacity-30"></div>
+                                    <div
+                                        className="absolute top-0 left-0 w-full h-full bg-charcoal origin-top transition-transform duration-[2375ms] ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+                                        style={{
+                                            transform: timelineHasAnimated ? 'scaleY(1)' : 'scaleY(0)'
+                                        }}
+                                    />
+                                </div>
+
                                 {serviceTimeline.map((entry, i) => (
                                     <div key={entry.period} className="relative">
                                         {/* Timeline Dot */}
-                                        <div className={`absolute -left-[37px] top-1 w-3 h-3 rounded-full border-2 border-white ${i === 0 ? 'bg-charcoal' : 'bg-gray-300'}`}></div>
+                                        <div
+                                            className={`absolute -left-[29px] sm:-left-[37px] top-1 w-3 h-3 rounded-full border-2 border-white transition-all duration-300 ease-out z-10 ${timelineHasAnimated ? 'bg-charcoal shadow-inner scale-100 delay-300' : 'bg-transparent scale-0'}`}
+                                            style={{ transitionDelay: `${i * 150}ms` }}
+                                        ></div>
 
                                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-1">
                                             <h4 className="font-display font-bold text-charcoal text-lg tracking-tight">
@@ -231,7 +288,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
 
                                         {/* Expanded Details for most recent role */}
                                         {i === 0 && (
-                                            <div className="bg-off-white p-4 rounded-sm border border-border-neutral space-y-2">
+                                            <div className="bg-off-white p-3 sm:p-4 rounded-sm border border-border-neutral space-y-2 transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent">
                                                 {[
                                                     '24/7 physical security for live military installation',
                                                     'Primary access-control authority at main entry points',
@@ -253,14 +310,14 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
 
                     {/* Qualifications Tab */}
                     {activeTab === 'quals' && (
-                        <div className="space-y-8 animate-fade-in">
+                        <div className="px-5 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 sm:gap-7">
                             <div>
-                                <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-4">Certifications</h4>
+                                <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-3 sm:mb-4">Certifications</h4>
                                 <div className="grid grid-cols-1 gap-3">
                                     {qualifications.map((qual, i) => (
                                         <div
                                             key={qual.title}
-                                            className="flex items-center justify-between p-4 bg-white border border-border-neutral hover:shadow-sm transition-shadow rounded-sm"
+                                            className="flex items-center justify-between p-3 sm:p-4 bg-white border border-border-neutral rounded-sm transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent"
                                         >
                                             <div className="flex items-center gap-4">
                                                 <div className="w-8 h-8 bg-off-white rounded-full flex items-center justify-center flex-shrink-0 text-charcoal">
@@ -282,7 +339,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-4">Personal Attributes</h4>
+                                <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-3 sm:mb-4">Personal Attributes</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {[
                                         { attr: 'Calm Under Pressure', icon: 'psychology' },
@@ -292,7 +349,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                         { attr: 'Clear Communicator', icon: 'forum' },
                                         { attr: 'Independent Operator', icon: 'person' },
                                     ].map(({ attr, icon }) => (
-                                        <div key={attr} className="flex items-center gap-2 bg-off-white border border-border-neutral px-3 py-2 rounded-sm">
+                                        <div key={attr} className="flex items-center gap-2 bg-off-white border border-border-neutral px-3 py-2 rounded-sm transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent">
                                             <span className="text-xs text-charcoal font-medium">{attr}</span>
                                         </div>
                                     ))}
@@ -303,7 +360,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                 </div>
 
                 {/* ─── Download Action Bar ─── */}
-                <div className="bg-white px-8 py-5 border-t border-border-neutral flex items-center justify-between">
+                <div className="px-5 sm:px-8 py-5 border-t border-[rgba(255,255,255,0.35)] flex items-center justify-between bg-transparent flex-shrink-0">
                     <span className="text-xs text-battleship-gray font-medium hidden sm:block">
                         Available in PDF format
                     </span>
@@ -325,19 +382,22 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                             <button
                                 onClick={handleDownload}
                                 disabled={isDownloading}
-                                className="bg-charcoal hover:bg-charcoal-light text-white px-8 py-2.5 text-xs font-bold uppercase tracking-widest transition-all shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer rounded-sm flex items-center gap-2"
+                                className="group relative bg-charcoal text-white px-8 py-3.5 text-xs font-bold uppercase tracking-widest overflow-hidden rounded-sm hover:scale-[1.02] hover:shadow-lg transition-all duration-150 ease-out disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                             >
-                                {isDownloading ? (
-                                    <>
-                                        <span className="material-icons text-sm animate-spin">refresh</span>
-                                        Generating...
-                                    </>
-                                ) : (
-                                    <>
-                                        Download CV
-                                        <span className="material-icons text-sm ml-1">download</span>
-                                    </>
-                                )}
+                                <span className="relative z-10 flex items-center gap-2">
+                                    {isDownloading ? (
+                                        <>
+                                            <span className="material-icons text-sm animate-spin">refresh</span>
+                                            Generating...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Download CV
+                                            <span className="material-icons text-sm ml-1 group-hover:translate-x-1 transition-transform duration-300">download</span>
+                                        </>
+                                    )}
+                                </span>
+                                <div className="absolute inset-0 bg-charcoal-light transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                             </button>
                         )}
                     </div>

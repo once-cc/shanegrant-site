@@ -130,12 +130,12 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
         <div className="absolute hover:border-army-green duration-400 drop-shadow-[0_0px_20px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0px_20px_rgba(255,255,255,0.3)] bottom-8 md:bottom-12 backdrop-blur-sm rounded-3xl bg-white/60 left-1/2 border-2 border-border-neutral items-center justify-center p-3 -translate-x-1/2 z-10 hidden md:flex w-auto h-auto">
           <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-lg relative">
             <img
-              src="/footer-profile-optimized.webp"
+              src="/footer-profile1.webp"
               alt="Shane Grant"
               className="w-full h-full object-cover"
-              loading="lazy"
+              loading="eager"
               decoding="async"
-              fetchPriority="low"
+              fetchPriority="auto"
               width="96"
               height="96"
             />

@@ -1,15 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
 import { SERVICE_RECORD } from '../constants';
 import { ServiceRole } from '../types';
 import FadeIn from './FadeIn';
 import HolographicCard from './ui/holographic-card';
+import { cn } from '../lib/utils';
 
 const ServiceRecord: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<ServiceRole | null>(null);
+  const [expandedDuties, setExpandedDuties] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  // Breakpoint refs for identifying scroll position for each card
+  const breakpointRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const openModal = (role: ServiceRole) => {
     setSelectedRole(role);
+    setExpandedDuties(false);
     document.body.style.overflow = 'hidden';
   };
 
@@ -27,18 +34,34 @@ const ServiceRecord: React.FC = () => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-  // Timeline scroll animation
+  // Container ref for scene-driven animation trigger
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
 
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  // Intersection Observer for active card state via breakpoints
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // "When breakpoint enters activation zone → set activeCardIndex"
+            const index = Number(entry.target.getAttribute('data-service-breakpoint'));
+            setActiveIndex(index);
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+        root: null,
+        rootMargin: "-20% 0px -20% 0px",
+      }
+    );
+
+    breakpointRefs.current.forEach((bp) => {
+      if (bp) observer.observe(bp);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="py-24 bg-off-white relative overflow-hidden" id="experience">
@@ -68,10 +91,17 @@ const ServiceRecord: React.FC = () => {
           {/* Timeline Line Base */}
           <div className="absolute left-4 md:left-[140px] top-4 bottom-4 w-px bg-border-neutral md:block hidden"></div>
 
-          {/* Animated Timeline Line */}
+          {/* Animated Timeline Line - Synced with Active Card */}
           <motion.div
             className="absolute left-4 md:left-[140px] top-4 bottom-4 w-px bg-charcoal origin-top md:block hidden z-10"
-            style={{ scaleY }}
+            initial={{ scaleY: 0 }}
+            animate={{
+              scaleY: activeIndex === null ? 0 : activeIndex === 0 ? 0.33 : activeIndex === 1 ? 0.66 : 1
+            }}
+            transition={{
+              duration: 0.8,
+              ease: [0.43, 0.13, 0.23, 0.96]
+            }}
           >
             {/* Glowing Head */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-6 bg-gradient-to-t from-charcoal to-transparent opacity-50 blur-sm"></div>
@@ -88,11 +118,14 @@ const ServiceRecord: React.FC = () => {
 
               {/* Timeline Node - Animated */}
               <motion.div
-                initial={{ backgroundColor: '#D1D5DB', scale: 0.8 }} // gray-300
-                whileInView={{ backgroundColor: '#2c3035', scale: 1 }} // charcoal
+                initial={{ scale: 0.8 }}
+                whileInView={{ scale: 1 }}
                 viewport={{ margin: "-100px 0px -100px 0px" }}
                 transition={{ duration: 0.4 }}
-                className={`hidden md:block absolute left-[136px] top-8 w-2 h-2 rounded-full z-20 ring-4 ring-off-white`}
+                className={cn(
+                  "hidden md:block absolute left-[136px] top-8 w-2 h-2 rounded-full z-20 ring-4 ring-off-white transition-colors duration-300",
+                  activeIndex === index ? "bg-neutral-900" : "bg-neutral-400"
+                )}
               ></motion.div>
 
               {/* Mobile Date */}
@@ -101,56 +134,106 @@ const ServiceRecord: React.FC = () => {
                 <span className="font-mono text-sm font-bold text-charcoal">{record.years}</span>
               </div>
 
-              {/* Service Card - Document Style */}
-              <HolographicCard
-                onClick={() => openModal(record)}
-                className="glass-panel p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 bg-white cursor-pointer relative overflow-hidden group rounded-sm"
-              >
-                <div className="flex flex-col md:flex-row md:items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-display font-bold text-charcoal tracking-tight group-hover:text-charcoal-light transition-colors">{record.role}</h3>
-                    <p className="text-sm font-medium text-battleship-gray uppercase tracking-wider mt-1 mb-2">{record.translation}</p>
-                    {record.location && (
-                      <p className="text-xs text-battleship-gray font-body flex items-center gap-1 font-medium mt-2">
-                        <span className="material-icons text-[14px] text-battleship-gray">place</span>
-                        {record.location}
+              {/* Breakpoint Marker */}
+              <div
+                ref={(el) => {
+                  breakpointRefs.current[index] = el;
+                }}
+                data-service-breakpoint={index}
+                className="h-px w-full relative pointer-events-none opacity-0"
+              />
+
+              {/* Service Card */}
+              <div>
+                <HolographicCard
+                  onClick={() => openModal(record)}
+                  className={cn(
+                    "glass-panel p-8 cursor-pointer relative overflow-hidden group rounded-sm",
+                    "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
+                    activeIndex === index && "scale-[1.02] shadow-[0_40px_120px_rgba(0,0,0,0.25)] z-10"
+                  )}
+                >
+
+
+                  <div className="flex flex-col md:flex-row md:items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-[26px] md:text-[28px] font-semibold text-charcoal tracking-[-0.01em] group-hover:text-charcoal-light transition-colors">
+                        {record.role}
+                      </h3>
+                      <p className="text-[13px] font-medium text-neutral-500 uppercase tracking-[0.08em] mt-1 mb-2">
+                        {record.translation}
                       </p>
-                    )}
-                  </div>
-                  <div className="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
-                    <span className="text-xs font-bold text-charcoal uppercase tracking-wider border-b border-charcoal pb-0.5 hover:text-charcoal-light transition-colors">
-                      View Details
-                    </span>
-                  </div>
-                </div>
 
-                <p className="text-charcoal-light text-sm leading-relaxed mt-4 line-clamp-2 border-l-2 border-border-neutral pl-4">
-                  {record.description}
-                </p>
+                      {/* Meta Row (Years + Location) */}
+                      <p className="text-[13px] text-neutral-500 font-body flex items-center gap-1 font-medium mt-1 leading-tight">
+                        {record.years && `${record.years} • `}{record.location}
+                      </p>
+                    </div>
+                    <div className="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
+                      <span className="text-xs font-bold text-charcoal uppercase tracking-wider border-b border-charcoal pb-0.5 hover:text-charcoal-light transition-colors">
+                        View Details
+                      </span>
+                    </div>
+                  </div>
 
-                <div className="flex flex-wrap gap-2 mt-6">
-                  {record.tags.slice(0, 3).map(tag => (
-                    <span key={tag} className="text-[10px] uppercase font-bold text-battleship-gray bg-off-white px-2 py-1 rounded-sm border border-border-neutral">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </HolographicCard>
+                  <p className="text-charcoal-light text-sm leading-relaxed mt-4 max-w-[640px] line-clamp-2 border-l-2 border-border-neutral pl-4">
+                    {record.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-3 mt-4">
+                    {record.tags.slice(0, 3).map(tag => (
+                      <span key={tag} className="text-[11px] uppercase font-bold text-battleship-gray opacity-80 bg-off-white px-2.5 py-1 rounded-sm border border-border-neutral">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </HolographicCard>
+              </div>
             </FadeIn>
           ))}
         </div>
       </div>
 
       {/* Detail Modal - Clean Institutional */}
-      {selectedRole && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-28 pb-8 px-4 sm:px-6 animate-fade-in" onClick={closeModal}>
-          <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm"></div>
+      {/* Detail Modal - Clean Institutional */}
+      {selectedRole && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+          onClick={closeModal}
+        >
+          <div className="absolute inset-0 bg-[rgba(10,14,20,0.45)] backdrop-blur-[16px] animate-fade-in"></div>
           <div
-            className="bg-white w-full max-w-2xl max-h-full overflow-y-auto relative z-10 shadow-2xl rounded-sm flex flex-col"
+            className="w-full max-w-2xl max-h-[85vh] overflow-hidden relative z-10 rounded-[20px] flex flex-col bg-[rgba(255,255,255,0.78)] backdrop-blur-[20px] border border-[rgba(255,255,255,0.35)] shadow-[0_10px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.6)] animate-fade-in origin-center"
+            style={{
+              animationDuration: '0.14s',
+              animationTimingFunction: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+              animationName: 'scale-in'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
+            <style>{`
+                @keyframes scale-in {
+                    from { opacity: 0; transform: scale(0.98); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+                /* Scrollbar Styling */
+                .modal-scroll::-webkit-scrollbar {
+                    width: 6px;
+                }
+                .modal-scroll::-webkit-scrollbar-track {
+                    background: transparent;
+                    border-radius: 3px;
+                }
+                .modal-scroll::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.2);
+                    border-radius: 3px;
+                }
+                .modal-scroll::-webkit-scrollbar-thumb:hover {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            `}</style>
             {/* Modal Header */}
-            <div className="bg-charcoal p-8 border-b border-white/10 sticky top-0 z-20 flex justify-between items-start">
+            <div className="px-8 py-8 border-b border-[rgba(255,255,255,0.1)] flex justify-between items-start bg-gradient-to-b from-[rgba(15,20,28,0.75)] to-[rgba(15,20,28,0.55)] backdrop-blur-[24px] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] shrink-0">
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="bg-white text-charcoal text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest rounded-sm">
@@ -160,7 +243,7 @@ const ServiceRecord: React.FC = () => {
                     {selectedRole.years}
                   </span>
                 </div>
-                <h3 className="text-2xl font-display font-bold text-white">{selectedRole.role}</h3>
+                <h3 className="text-2xl font-display font-bold text-white tracking-[0.04em]">{selectedRole.role}</h3>
                 <p className="text-sm font-medium text-white/60 uppercase tracking-wide mt-1">{selectedRole.translation}</p>
               </div>
               <button
@@ -172,8 +255,8 @@ const ServiceRecord: React.FC = () => {
             </div>
 
             {/* Modal Content */}
-            <div className="p-8 bg-off-white/30">
-              <div className="bg-white p-6 border border-border-neutral rounded-sm mb-8 shadow-sm">
+            <div className="p-8 bg-transparent overflow-y-auto modal-scroll">
+              <div className="bg-white p-6 border border-border-neutral rounded-sm mb-8 shadow-sm transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent">
                 <h4 className="text-xs font-bold text-charcoal uppercase tracking-widest mb-3 border-b border-border-neutral pb-2">Operational Summary</h4>
                 <p className="text-charcoal text-sm leading-relaxed font-body">
                   {selectedRole.description}
@@ -181,22 +264,46 @@ const ServiceRecord: React.FC = () => {
               </div>
 
               <div>
-                <h4 className="text-xs font-bold text-battleship-gray uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <span className="material-icons text-sm">assignment</span>
+                <h4 className="text-[11px] tracking-[0.08em] font-bold text-battleship-gray uppercase mb-3 flex items-center gap-2 opacity-60">
                   Key Competencies & Duties
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="h-px w-full bg-[rgba(0,0,0,0.08)] mb-4"></div>
+
+                <div className="space-y-4">
                   {selectedRole.tags.map((tag, idx) => (
-                    <span key={idx} className="flex items-center gap-2 px-3 py-2 bg-white border border-border-neutral rounded-sm shadow-sm text-sm font-medium text-charcoal">
-                      <span className="w-1 h-1 bg-charcoal rounded-full"></span>
-                      {tag}
-                    </span>
+                    <div
+                      key={idx}
+                      className={`flex items-start gap-4 group transition-all duration-300 ${expandedDuties
+                        ? 'flex'
+                        : idx < 3
+                          ? 'flex'
+                          : idx < 5
+                            ? 'hidden md:flex'
+                            : 'hidden'
+                        }`}
+                    >
+                      <span className="font-mono text-[12px] font-semibold text-charcoal/60 min-w-[32px] pt-0.5">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <p className="text-sm font-medium text-charcoal leading-relaxed transition-colors duration-200 group-hover:text-charcoal-light">
+                        {tag}
+                      </p>
+                    </div>
                   ))}
                 </div>
+
+                {selectedRole.tags.length > 3 && (
+                  <button
+                    onClick={() => setExpandedDuties(!expandedDuties)}
+                    className="mt-6 text-[10px] font-bold uppercase tracking-[0.05em] text-charcoal border-b border-charcoal/30 hover:border-charcoal transition-all pb-0.5"
+                  >
+                    {expandedDuties ? 'Collapse Duty Record' : 'View Full Operational Duty Record'}
+                  </button>
+                )}
               </div>
 
               {selectedRole.location && (
-                <div className="mt-8 pt-6 border-t border-border-neutral flex items-center justify-between text-xs text-battleship-gray uppercase tracking-wide">
+                <div className="mt-8 pt-6 border-t border-[rgba(0,0,0,0.1)] flex items-center justify-between text-xs text-battleship-gray uppercase tracking-wide">
                   <div className="flex items-center gap-2 font-medium">
                     <span className="material-icons text-sm">place</span>
                     Posted: {selectedRole.location}
@@ -208,7 +315,8 @@ const ServiceRecord: React.FC = () => {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

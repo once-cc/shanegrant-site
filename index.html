@@ -19,7 +19,7 @@
     <meta name="twitter:title" content="Shane Grant | Elite Security Consultant - NZDF Veteran" />
     <meta name="twitter:description"
         content="Trusted security advisor with 30+ years NZDF experience. Proven expertise in defense operations, risk management &amp; tactical security." />
-    <meta name="twitter:image" content="/hero-profile-laptop.webp" />
+    <meta name="twitter:image" content="/hero-profile.webp" />
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#F6F6F4" />
@@ -33,7 +33,7 @@
     <!-- Enhanced Open Graph -->
     <meta property="og:url" content="https://shanegrant.site/" />
     <meta property="og:site_name" content="Shane Grant" />
-    <meta property="og:image" content="https://shanegrant.site/hero-profile-laptop.webp" />
+    <meta property="og:image" content="https://shanegrant.site/hero-profile.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_NZ" />
@@ -53,7 +53,7 @@
       "jobTitle": "Security Consultant",
       "description": "Elite security consultant with 30+ years of disciplined service operating within high-security NZDF environments",
       "url": "https://shanegrant.site",
-      "image": "https://shanegrant.site/hero-profile-laptop.webp",
+      "image": "https://shanegrant.site/hero-profile.webp",
       "alumniOf": {
         "@type": "Organization",
         "name": "New Zealand Defence Force"
@@ -72,6 +72,11 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="/hero-profile.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="/footer-profile1.webp" type="image/webp">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap"
         rel="stylesheet" />
@@ -192,6 +197,45 @@
 
         .delay-300 {
             transition-delay: 300ms;
+        }
+
+        /* ═════════════════════════════════════════════════════════
+           SCROLL PERFORMANCE OPTIMIZATIONS
+           Following scroll-experience skill best practices
+           ═════════════════════════════════════════════════════════ */
+
+        /* Smooth scroll behavior - respects user preferences */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+        }
+
+        /* Section containment for better scroll performance */
+        section {
+            contain: layout style;
+        }
+
+        /* Passive touch scrolling for mobile */
+        * {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Remove will-change from static content to free GPU */
+        .scroll-visible {
+            will-change: auto;
+        }
+
+        /* Ensure scroll animations stay smooth */
+        @media (prefers-reduced-motion: no-preference) {
+            .scroll-hidden {
+                will-change: opacity, transform;
+            }
+        }
+
+        /* Optimize footer reveal */
+        .sticky {
+            contain: layout;
         }
     </style>
 

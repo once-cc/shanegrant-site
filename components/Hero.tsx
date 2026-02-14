@@ -8,7 +8,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
   return (
-    <section className="relative min-h-screen bg-off-white text-charcoal border-b border-border-neutral overflow-hidden w-full">
+    <section className="relative min-h-[calc(100svh_-_5rem)] bg-off-white text-charcoal border-b border-border-neutral overflow-hidden w-full">
 
       {/* Subtle Background Texture */}
       <div className="absolute inset-0 z-0 bg-off-white"></div>
@@ -20,13 +20,13 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             Zone 2 (below fold): Status → Sub copy → Accolades → CTA
           DESKTOP (lg+): Original 60/40 split within 1280px rail
           ═══════════════════════════════════════════════════════ */}
-      <div className="relative z-10 min-h-screen">
+      <div className="relative z-10 min-h-[calc(100svh_-_5rem)]">
 
         {/* ════════════════════════════════════════════════════
             MOBILE HERO — Only visible below lg (< 1024px)
             Two-zone architecture for above/below fold separation
             ════════════════════════════════════════════════════ */}
-        <div className="lg:hidden flex flex-col min-h-screen">
+        <div className="lg:hidden flex flex-col min-h-[calc(100svh_-_5rem)]">
 
           {/* ── ZONE 1: ABOVE THE FOLD ──
                Full-bleed hero image with text overlay.
@@ -37,11 +37,16 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             {/* Hero Image — full viewport width, no gutters, no clipping */}
             <div className="absolute inset-0">
               <picture>
-                <source media="(min-width: 768px)" srcSet="/hero-profile-laptop.webp" />
+                <source media="(min-width: 768px)" srcSet="/hero-profile.webp" />
                 <img
-                  src="/hero-profile-laptop.webp"
+                  src="/hero-profile.webp"
                   alt="Shane Grant - Defence Security Professional"
                   className="w-full h-full object-cover object-[40%_top] sm:object-[50%_top]"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="1200"
+                  height="1600"
                 />
               </picture>
               {/* Bottom gradient fade — full width */}
@@ -50,7 +55,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
 
             {/* Text overlay — positioned with padding, sits on top of gradient */}
             <div className="relative z-20 flex flex-col justify-center h-full min-h-[75svh] sm:min-h-[70svh] px-6 sm:px-8 pt-20 sm:pt-24 pb-[25svh]">
-              <h1 className="text-[2.4rem] sm:text-5xl md:text-6xl font-display font-bold text-charcoal leading-[0.88] tracking-tighter max-w-[45%] sm:max-w-[42%]">
+              <h1 className="text-[2.4rem] sm:text-5xl md:text-6xl font-display font-bold text-charcoal leading-[1.1] tracking-tighter max-w-[45%] sm:max-w-[42%]">
                 Security.<br />
                 Procedure.<br />
                 Trust.
@@ -93,7 +98,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
               <div className="absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-off-white to-transparent pointer-events-none"></div>
 
               <div className="opacity-80 mix-blend-multiply">
-                <InfiniteSlider gap={28} duration={40} durationOnHover={100}>
+                <InfiniteSlider gap={28} duration={40}>
                   {ACCOLADES.map((accolade) => (
                     <div key={accolade.id} className="relative group w-14 sm:w-16">
                       <img
@@ -134,12 +139,12 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             Original 1280px centered rail with 60/40 split.
             Image breaks out to right-anchored full-bleed.
             ════════════════════════════════════════════════════ */}
-        <div className="hidden lg:block min-h-screen">
-          <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-8 min-h-screen">
-            <div className="grid grid-cols-[1.2fr_0.8fr] min-h-screen">
+        <div className="hidden lg:block min-h-[calc(100svh_-_5rem)]">
+          <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-8 min-h-[calc(100svh_-_5rem)]">
+            <div className="grid grid-cols-[1.2fr_0.8fr] min-h-[calc(100svh_-_5rem)]">
 
               {/* ── TEXT CONTENT — Bounded by 1280px rail ── */}
-              <div className="flex flex-col justify-center min-h-screen relative z-10 pr-12">
+              <div className="flex flex-col justify-center min-h-[calc(100svh_-_5rem)] relative z-10 pr-12">
                 <div className="w-full max-w-2xl">
 
                   {/* Status Pill */}
@@ -167,7 +172,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
                     <div className="absolute right-0 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-off-white to-transparent pointer-events-none"></div>
 
                     <div className="opacity-80 mix-blend-multiply">
-                      <InfiniteSlider gap={32} duration={40} durationOnHover={100}>
+                      <InfiniteSlider gap={32} duration={40}>
                         {ACCOLADES.map((accolade) => (
                           <div key={accolade.id} className="relative group w-16 md:w-20">
                             <img
@@ -211,11 +216,16 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
                Fully independent of the 1280px rail. ── */}
           <div className="absolute top-0 right-0 bottom-0 w-[45%] overflow-hidden">
             <picture>
-              <source media="(min-width: 1024px)" srcSet="/hero-profile-laptop.webp" />
+              <source media="(min-width: 1024px)" srcSet="/hero-profile.webp" />
               <img
-                src="/hero-profile-laptop.webp"
+                src="/hero-profile.webp"
                 alt="Shane Grant - Defence Security Professional"
                 className="h-full w-full object-cover object-center"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                width="1200"
+                height="1600"
               />
             </picture>
 
