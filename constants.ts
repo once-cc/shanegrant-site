@@ -31,7 +31,7 @@ export const COMPETENCIES: Competency[] = [
     id: '2',
     icon: 'visibility',
     title: 'Surveillance & Monitoring',
-    description: 'Proactive monitoring of CCTV, electronic alarm systems, and foot patrols. skilled in incident recognition and rapid documentation.'
+    description: 'Proactive monitoring of CCTV, electronic alarm systems, and foot patrols. Skilled in incident recognition and rapid documentation.'
   },
   {
     id: '3',

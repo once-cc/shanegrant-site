@@ -8,7 +8,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
   return (
-    <section className="relative min-h-[calc(100svh_-_5rem)] bg-off-white text-charcoal border-b border-border-neutral overflow-hidden w-full">
+    <section id="profile" className="relative min-h-[calc(100svh_-_5rem)] bg-off-white text-charcoal border-b border-border-neutral overflow-hidden w-full">
 
       {/* Subtle Background Texture */}
       <div className="absolute inset-0 z-0 bg-off-white"></div>
@@ -26,13 +26,13 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             MOBILE HERO — Only visible below lg (< 1024px)
             Two-zone architecture for above/below fold separation
             ════════════════════════════════════════════════════ */}
-        <div className="lg:hidden flex flex-col min-h-[calc(100svh_-_5rem)]">
+        <div className="lg:hidden flex flex-col h-[calc(100svh_-_5rem)] overflow-y-auto">
 
           {/* ── ZONE 1: ABOVE THE FOLD ──
                Full-bleed hero image with text overlay.
                Image spans viewport edge-to-edge — no clipping, no gutters.
                Text floats over the left portion with gradient protection. */}
-          <div className="relative flex-shrink-0 min-h-[75svh] sm:min-h-[70svh]">
+          <div className="relative flex-1 min-h-0">
 
             {/* Hero Image — full viewport width, no gutters, no clipping */}
             <div className="absolute inset-0">
@@ -54,7 +54,7 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             </div>
 
             {/* Text overlay — positioned with padding, sits on top of gradient */}
-            <div className="relative z-20 flex flex-col justify-center h-full min-h-[75svh] sm:min-h-[70svh] px-6 sm:px-8 pt-20 sm:pt-24 pb-[25svh]">
+            <div className="relative z-20 flex flex-col justify-center h-full px-6 sm:px-8 pt-16 sm:pt-20 pb-12">
               <h1 className="text-[2.4rem] sm:text-5xl md:text-6xl font-display font-bold text-charcoal leading-[1.1] tracking-tighter max-w-[45%] sm:max-w-[42%]">
                 Security.<br />
                 Procedure.<br />
@@ -72,32 +72,32 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             </div>
           </div>
 
-          {/* ── ZONE 2: BELOW THE FOLD ──
-               Supporting content stacked vertically.
-               Separated from Zone 1 to prevent viewport crowding. */}
-          <div className="flex-1 flex flex-col px-6 sm:px-8 pt-8 sm:pt-10 pb-12">
+          {/* ── ZONE 2: SUPPORTING CONTENT ──
+               Compact content panel below image.
+               flex-shrink-0 ensures it keeps its natural size while Zone 1 flexes. */}
+          <div className="flex-shrink-0 flex flex-col px-6 sm:px-8 pt-3 sm:pt-6 pb-4 sm:pb-6">
 
             {/* Operational Status Pill */}
-            <div className="inline-flex items-center space-x-3 mb-6 pl-1 pr-4 py-1.5 bg-white border border-border-neutral rounded-full shadow-sm w-fit">
+            <div className="inline-flex items-center space-x-3 mb-2 pl-1 pr-4 py-1 bg-white border border-border-neutral rounded-full shadow-sm w-fit">
               <span className="w-2.5 h-2.5 bg-army-green rounded-full animate-pulse"></span>
               <span className="text-charcoal-light text-xs font-bold tracking-widest uppercase">Operational Status: Active</span>
             </div>
 
             {/* Sub Copy */}
-            <div className="flex items-start space-x-4 mb-8">
+            <div className="flex items-start space-x-4 mb-3">
               <div className="h-px w-10 bg-charcoal mt-3.5 flex-shrink-0"></div>
-              <p className="text-lg sm:text-xl text-charcoal-light max-w-md leading-relaxed font-body font-light">
+              <p className="text-base sm:text-xl text-charcoal-light max-w-md leading-relaxed font-body font-light">
                 <strong className="text-charcoal font-bold">30+ years</strong> of disciplined service operating within high-security NZDF environments.
               </p>
             </div>
 
             {/* Accolade Carousel */}
-            <div className="relative w-full max-w-md mb-10">
+            <div className="relative w-full max-w-md mb-3">
               {/* Gradient Masks */}
               <div className="absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-off-white to-transparent pointer-events-none"></div>
               <div className="absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-off-white to-transparent pointer-events-none"></div>
 
-              <div className="opacity-80 mix-blend-multiply">
+              <div className="opacity-80">
                 <InfiniteSlider gap={28} duration={40}>
                   {ACCOLADES.map((accolade) => (
                     <div key={accolade.id} className="relative group w-14 sm:w-16">
@@ -113,10 +113,10 @@ const Hero: React.FC<HeroProps> = ({ onDownloadCV }) => {
             </div>
 
             {/* Primary CTA */}
-            <div className="flex flex-wrap gap-5 items-center">
+            <div className="flex flex-wrap gap-4 items-center">
               <button
                 onClick={onDownloadCV}
-                className="group relative bg-charcoal text-white px-8 py-4 text-sm font-bold uppercase tracking-widest overflow-hidden rounded-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="group relative bg-charcoal text-white px-6 py-3 sm:px-8 sm:py-4 text-sm font-bold uppercase tracking-widest overflow-hidden rounded-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   Download CV

@@ -7,29 +7,37 @@ interface FooterRevealProps {
     children: React.ReactNode;
 }
 
+/**
+ * FooterReveal — Pure document-flow wrapper.
+ * 
+ * No internal scroll contexts. No sticky. No transforms. No will-change.
+ * Just a relative container with decorative background layers.
+ * 
+ * The sticky footer effect is achieved by the Footer component itself
+ * using `position: sticky; bottom: 0` — handled at the component level,
+ * not the wrapper level.
+ */
 const FooterReveal: React.FC<FooterRevealProps> = ({ children }) => {
     return (
-        <div className="absolute inset-0 z-0">
-            {/* Sticky Container — Background + Content */}
-            <div className="sticky top-0 h-dvh w-full overflow-hidden will-change-transform">
-                <div
-                    className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
-                    style={{
-                        backgroundImage: `url("${footerKapiti}")`,
-                        willChange: 'opacity'
-                    }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
-                {/* Background Texture */}
-                <div
-                    className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none"
-                    style={{ backgroundImage: `url("${DIGITAL_CAMO_URI}")` }}
-                ></div>
+        <div className="relative">
+            {/* Background Image Layer — purely decorative, no structural effect */}
+            <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                    backgroundImage: `url("${footerKapiti}")`,
+                }}
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
+            {/* Background Texture */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{ backgroundImage: `url("${DIGITAL_CAMO_URI}")` }}
+            />
 
-                {/* Sticky Content */}
-                <div className="relative z-10 h-full w-full overflow-y-auto">
-                    {children}
-                </div>
+            {/* Content — normal document flow, no scroll container */}
+            <div className="relative z-10">
+                {children}
             </div>
         </div>
     );

@@ -25,7 +25,7 @@ const Honours: React.FC = () => {
 
             <div className="space-y-2.5">
               {CITATIONS.map((award, index) => (
-                <FadeIn key={award.id} delay={(index * 100 % 400) as any}>
+                <FadeIn key={award.id} delay={(index * 100 % 400)}>
                   <div className="relative overflow-hidden group flex items-center gap-3 px-4 py-3 bg-white/90 border border-border-neutral hover:shadow-md rounded-sm">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center w-8 h-8 bg-off-white rounded-sm group-hover:bg-charcoal group-hover:text-white transition-colors duration-300">
@@ -47,39 +47,43 @@ const Honours: React.FC = () => {
 
           {/* Personal Attributes Column - Clean Document Style */}
           <FadeIn delay={200} className="h-full">
-            <div className="relative overflow-hidden group bg-charcoal/85 text-white p-6 h-full rounded-sm shadow-xl">
-              {/* Floating Service Commendations (Accolades) - Cross Bounds Effect */}
-              <div className="absolute -top-5 -right-2 flex items-center z-20 pointer-events-auto">
+            <div className="relative h-full">
+              {/* Floating Service Commendations (Accolades) — breaks card containment */}
+              <div className="absolute -top-6 right-3 flex items-center z-30 pointer-events-auto">
                 {ACCOLADES.map((item, index) => (
                   <div
                     key={item.id}
-                    className={`relative transform transition-all duration-300 hover:scale-110 hover:z-50 ${index % 2 === 0 ? 'translate-y-1' : '-translate-y-1'}`}
-                    style={{ marginLeft: index === 0 ? 0 : '-12px' }}
+                    className={`relative transition-all duration-300 hover:scale-110 hover:z-50 cursor-pointer ${index % 2 === 0 ? 'translate-y-0.5' : '-translate-y-0.5'}`}
+                    style={{ marginLeft: index === 0 ? 0 : '-10px' }}
                   >
                     <img
                       src={item.src}
                       alt={item.title}
-                      className="h-14 w-auto object-contain drop-shadow-md"
+                      className="h-16 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}
               </div>
 
-              {/* Subtle texture or gradient */}
-              <div className="relative z-10">
-                <span className="text-white/40 font-body font-bold text-xs tracking-widest uppercase mb-2 block">Personnel Profile</span>
-                <h3 className="text-2xl font-display font-bold mb-3 tracking-tight pr-28">Personal Attributes</h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-5 font-body">
-                  A defence-trained professional embodying <strong className="text-white">calm discipline</strong> and <strong className="text-white">procedural precision</strong>. Accustomed to high-trust environments and independent decision making.
-                </p>
+              {/* Card — overflow-visible allows accolades to visually break boundary */}
+              <div className="relative overflow-visible group bg-charcoal/85 text-white p-6 h-full rounded-sm shadow-xl">
+                <div className="relative z-10">
+                  <span className="text-white/40 font-body font-bold text-xs tracking-widest uppercase mb-2 block">Personnel Profile</span>
+                  <h3 className="text-2xl font-display font-bold mb-3 tracking-tight pr-28">Personal Attributes</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-5 font-body">
+                    A defence-trained professional embodying <strong className="text-white">calm discipline</strong> and <strong className="text-white">procedural precision</strong>. Accustomed to high-trust environments and independent decision making.
+                  </p>
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-5">
-                  {PERSONAL_ATTRIBUTES.map((attr) => (
-                    <div key={attr.title}>
-                      <span className="block text-white font-bold text-sm tracking-wide mb-1">{attr.title}</span>
-                      <span className="block text-xs text-white/50 font-mono uppercase tracking-wider">{attr.subtitle}</span>
-                    </div>
-                  ))}
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-5">
+                    {PERSONAL_ATTRIBUTES.map((attr) => (
+                      <div key={attr.title}>
+                        <span className="block text-white font-bold text-sm tracking-wide mb-1">{attr.title}</span>
+                        <span className="block text-xs text-white/50 font-mono uppercase tracking-wider">{attr.subtitle}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

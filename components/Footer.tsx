@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
   ];
 
   return (
-    <section className={cn("relative w-full mt-0 overflow-hidden")}>
+    <section className={cn("sticky bottom-0 w-full mt-0 z-0")}>
       <footer className="border-t border-white/30 bg-white/20 backdrop-blur-md mt-0 relative">
         <div className="max-w-7xl flex flex-col justify-start items-center mx-auto min-h-[22rem] sm:min-h-[30rem] md:min-h-[35rem] relative p-4 py-6 md:py-8 pb-32 md:pb-48">
           <div className="flex flex-col w-full items-center">
@@ -53,8 +53,6 @@ const Footer: React.FC<FooterProps> = ({ onDownloadCV }) => {
                     key={index}
                     href={link.href}
                     className="text-white/50 hover:text-white transition-colors"
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <div className="w-6 h-6 hover:scale-110 duration-300">
                       {link.icon}

@@ -9,6 +9,16 @@ const corsHeaders = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
 }
 
+// Escape HTML entities to prevent XSS in email templates
+function escapeHtml(str: string): string {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+}
+
 serve(async (req) => {
     // Handle CORS preflight
     if (req.method === "OPTIONS") {
@@ -22,6 +32,15 @@ serve(async (req) => {
         if (!name || !email || !message) {
             return new Response(
                 JSON.stringify({ error: "Missing required fields: name, email, and message are required", success: false }),
+                { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            )
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email)) {
+            return new Response(
+                JSON.stringify({ error: "Invalid email format", success: false }),
                 { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
             )
         }
@@ -66,7 +85,12 @@ serve(async (req) => {
             } else {
                 console.log("Sending email via Resend...")
 
-                const emailSubject = `New Contact Form Submission from ${name}`
+                const safeName = escapeHtml(name)
+                const safeEmail = escapeHtml(email)
+                const safePhone = escapeHtml(phone || "Not provided")
+                const safeMessage = escapeHtml(message)
+
+                const emailSubject = `New Contact Form Submission from ${safeName}`
                 const emailHtml = `
 <!DOCTYPE html>
 <html>
@@ -92,18 +116,18 @@ serve(async (req) => {
     </div>
     <div class="section">
       <h2>Contact Details</h2>
-      <div class="field"><strong>Name:</strong> ${name}</div>
-      <div class="field"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></div>
-      <div class="field"><strong>Phone:</strong> ${phone || "Not provided"}</div>
+      <div class="field"><strong>Name:</strong> ${safeName}</div>
+      <div class="field"><strong>Email:</strong> <a href="mailto:${safeEmail}">${safeEmail}</a></div>
+      <div class="field"><strong>Phone:</strong> ${safePhone}</div>
     </div>
     <div class="section">
       <h2>Message</h2>
-      <div class="message-box">${message}</div>
+      <div class="message-box">${safeMessage}</div>
     </div>
     <div class="footer">
       <p><strong>Submission ID:</strong> ${submission.id}</p>
       <p><strong>Submitted:</strong> ${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })}</p>
-      <p>Click <strong>Reply</strong> to respond directly to ${email}</p>
+      <p>Click <strong>Reply</strong> to respond directly to ${safeEmail}</p>
     </div>
   </div>
 </body>

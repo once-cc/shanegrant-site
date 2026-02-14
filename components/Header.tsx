@@ -25,6 +25,7 @@ const Header: React.FC<HeaderProps> = ({ onDownloadCV }) => {
             <button
               onClick={onDownloadCV}
               className="text-charcoal px-3 py-2 text-xs font-bold font-body uppercase tracking-[0.2em] flex items-center gap-2 border border-charcoal/10 rounded-sm active:bg-charcoal/5"
+              aria-label="Download CV"
             >
               <span className="material-icons text-base">download</span>
               <span>CV</span>

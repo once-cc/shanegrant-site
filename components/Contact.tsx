@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FadeIn from './FadeIn';
 import { supabase } from '../lib/supabase';
+import { CONTACT_DETAILS } from '../constants';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,12 +32,11 @@ const Contact: React.FC = () => {
       });
 
       if (error) {
-        console.error('Edge Function error:', error);
+        // Edge Function error
         throw new Error('Failed to send your message. Please try again.');
       }
 
       if (!data?.success) {
-        console.error('Edge Function returned error:', data);
         throw new Error(data?.error || 'Failed to send your message. Please try again.');
       }
 
@@ -50,7 +50,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 bg-transparent relative overflow-hidden" id="contact">
+    <section className="py-12 sm:py-16 md:py-24 bg-charcoal/95 relative z-10 overflow-hidden" id="contact">
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
@@ -72,21 +72,21 @@ const Contact: React.FC = () => {
                     <span className="material-icons text-white/40 mt-1 mr-4 group-hover:text-white transition-colors">email</span>
                     <div>
                       <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1 font-bold">Email Address</p>
-                      <p className="font-body text-sm text-white font-medium">Grantshane411@gmail.com</p>
+                      <p className="font-body text-sm text-white font-medium">{CONTACT_DETAILS.email}</p>
                     </div>
                   </div>
                   <div className="flex items-start group">
                     <span className="material-icons text-white/40 mt-1 mr-4 group-hover:text-white transition-colors">phone_iphone</span>
                     <div>
                       <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1 font-bold">Mobile</p>
-                      <p className="font-body text-sm text-white font-medium">021 210 9665</p>
+                      <p className="font-body text-sm text-white font-medium">{CONTACT_DETAILS.phone}</p>
                     </div>
                   </div>
                   <div className="flex items-start group">
                     <span className="material-icons text-white/40 mt-1 mr-4 group-hover:text-white transition-colors">place</span>
                     <div>
                       <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1 font-bold">Location</p>
-                      <p className="font-body text-sm text-white font-medium">Paraparaumu, Wellington</p>
+                      <p className="font-body text-sm text-white font-medium">{CONTACT_DETAILS.location}</p>
                     </div>
                   </div>
                 </div>

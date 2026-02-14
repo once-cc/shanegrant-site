@@ -120,27 +120,6 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                     animationName: 'scale-in'
                 }}
             >
-                <style>{`
-                    @keyframes scale-in {
-                        from { opacity: 0; transform: scale(0.98); }
-                        to { opacity: 1; transform: scale(1); }
-                    }
-                    /* Scrollbar Styling */
-                    .modal-scroll::-webkit-scrollbar {
-                        width: 6px;
-                    }
-                    .modal-scroll::-webkit-scrollbar-track {
-                        background: transparent;
-                        border-radius: 3px;
-                    }
-                    .modal-scroll::-webkit-scrollbar-thumb {
-                        background: rgba(0, 0, 0, 0.2);
-                        border-radius: 3px;
-                    }
-                    .modal-scroll::-webkit-scrollbar-thumb:hover {
-                        background: rgba(0, 0, 0, 0.3);
-                    }
-                `}</style>
                 {/* ─── Professional Header ─── */}
                 <div className="px-5 py-6 sm:px-8 sm:py-8 flex items-center justify-between bg-gradient-to-b from-[rgba(15,20,28,0.75)] to-[rgba(15,20,28,0.55)] backdrop-blur-[24px] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] flex-shrink-0">
                     <div>
@@ -348,7 +327,7 @@ const CVDownloadModal: React.FC<CVDownloadModalProps> = ({ isOpen, onClose }) =>
                                         { attr: 'Physically Resilient', icon: 'fitness_center' },
                                         { attr: 'Clear Communicator', icon: 'forum' },
                                         { attr: 'Independent Operator', icon: 'person' },
-                                    ].map(({ attr, icon }) => (
+                                    ].map(({ attr }) => (
                                         <div key={attr} className="flex items-center gap-2 bg-off-white border border-border-neutral px-3 py-2 rounded-sm transition-all duration-140 ease-out hover:bg-[rgba(255,255,255,0.86)] hover:shadow-[0_12px_42px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.7)] hover:border-transparent">
                                             <span className="text-xs text-charcoal font-medium">{attr}</span>
                                         </div>

@@ -199,21 +199,56 @@
             transition-delay: 300ms;
         }
 
-        /* ═════════════════════════════════════════════════════════
-           SCROLL PERFORMANCE OPTIMIZATIONS
-           Following scroll-experience skill best practices
-           ═════════════════════════════════════════════════════════ */
+        .delay-400 {
+            transition-delay: 400ms;
+        }
 
-        /* Smooth scroll behavior - respects user preferences */
-        @media (prefers-reduced-motion: no-preference) {
-            html {
-                scroll-behavior: smooth;
+        .delay-500 {
+            transition-delay: 500ms;
+        }
+
+        /* ═════════════════════════════════════════════════════════
+           MODAL ANIMATIONS & SCROLLBAR
+           Centralized from ServiceRecord + CVDownloadModal
+        ═════════════════════════════════════════════════════════ */
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
             }
         }
 
-        /* Section containment for better scroll performance */
+        .modal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-scroll::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .modal-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        SCROLL PERFORMANCE OPTIMIZATIONS Following scroll-experience skill best practices ═════════════════════════════════════════════════════════ */
+        /* Smooth scroll now handled by Lenis — do NOT set scroll-behavior: smooth */
+
+        /* Section containment for better scroll performance.
+           NOTE: contain: layout breaks sticky positioning.
+           Only apply style containment, which is safe. */
         section {
-            contain: layout style;
+            contain: style;
         }
 
         /* Passive touch scrolling for mobile */
@@ -231,11 +266,6 @@
             .scroll-hidden {
                 will-change: opacity, transform;
             }
-        }
-
-        /* Optimize footer reveal */
-        .sticky {
-            contain: layout;
         }
     </style>
 

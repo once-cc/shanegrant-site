@@ -24,25 +24,14 @@ const App: React.FC = () => {
         <Hero onDownloadCV={handleOpenCV} />
         <Competencies />
         <ServiceRecord />
-        {/* Layered Reveal Container */}
-        <div className="relative">
-          {/* 1. Footer Background Layer (Sticky) */}
-          <FooterReveal>
-            <div className="flex items-center justify-center py-8 md:min-h-screen md:py-0">
-              <Contact />
-            </div>
-            <Footer onDownloadCV={handleOpenCV} />
-          </FooterReveal>
+        <Honours />
 
-          {/* 2. Foreground Content (Opaque) */}
-          <section className="relative z-20 bg-off-white">
-            <Honours />
-          </section>
-
-          {/* 3. Reveal Spacer - Creates the window for the footer to show */}
-          <div className="h-[100dvh] w-full pointer-events-none" />
-        </div>
-      </main >
+        {/* Footer area — sticky footer sits behind scrolling Contact */}
+        <FooterReveal>
+          <Contact />
+          <Footer onDownloadCV={handleOpenCV} />
+        </FooterReveal>
+      </main>
       <CVDownloadModal isOpen={isCVModalOpen} onClose={handleCloseCV} />
     </>
   );

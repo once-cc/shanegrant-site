@@ -5,14 +5,14 @@ export const useScrollAnimation = (threshold = 0.1, rootMargin = '0px') => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
-                    // Unobserve once visible for "progression" without "theatrics" (no re-animating on scroll up)
-                    if (ref.current) {
-                        observer.unobserve(ref.current);
-                    }
+                    observer.unobserve(entry.target);
                 }
             },
             {
@@ -21,14 +21,10 @@ export const useScrollAnimation = (threshold = 0.1, rootMargin = '0px') => {
             }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
+        observer.observe(element);
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
-            }
+            observer.unobserve(element);
         };
     }, [threshold, rootMargin]);
 

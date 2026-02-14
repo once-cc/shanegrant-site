@@ -108,7 +108,7 @@ const ServiceRecord: React.FC = () => {
           </motion.div>
 
           {SERVICE_RECORD.map((record, index) => (
-            <FadeIn key={record.id} delay={(index * 100 % 400) as any} className="relative md:pl-[180px] group">
+            <FadeIn key={record.id} delay={(index * 100 % 400)} className="relative md:pl-[180px] group">
               {/* Date (Left Side) - Desktop */}
               <div className="hidden md:flex absolute left-0 top-0 w-[140px] justify-end pr-8 pt-6">
                 <span className={`font-mono text-sm tracking-wide font-bold ${index === 0 ? 'text-charcoal' : 'text-battleship-gray'} transition-colors duration-300`}>
@@ -195,7 +195,6 @@ const ServiceRecord: React.FC = () => {
       </div>
 
       {/* Detail Modal - Clean Institutional */}
-      {/* Detail Modal - Clean Institutional */}
       {selectedRole && createPortal(
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
@@ -211,27 +210,6 @@ const ServiceRecord: React.FC = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <style>{`
-                @keyframes scale-in {
-                    from { opacity: 0; transform: scale(0.98); }
-                    to { opacity: 1; transform: scale(1); }
-                }
-                /* Scrollbar Styling */
-                .modal-scroll::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .modal-scroll::-webkit-scrollbar-track {
-                    background: transparent;
-                    border-radius: 3px;
-                }
-                .modal-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 3px;
-                }
-                .modal-scroll::-webkit-scrollbar-thumb:hover {
-                    background: rgba(0, 0, 0, 0.3);
-                }
-            `}</style>
             {/* Modal Header */}
             <div className="px-8 py-8 border-b border-[rgba(255,255,255,0.1)] flex justify-between items-start bg-gradient-to-b from-[rgba(15,20,28,0.75)] to-[rgba(15,20,28,0.55)] backdrop-blur-[24px] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] shrink-0">
               <div>
