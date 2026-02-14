@@ -1,7 +1,6 @@
 import React from 'react';
 import { CITATIONS, PERSONAL_ATTRIBUTES, ACCOLADES } from '../constants';
 import FadeIn from './FadeIn';
-import HolographicCard from './ui/holographic-card';
 
 const Honours: React.FC = () => {
   return (
@@ -27,7 +26,7 @@ const Honours: React.FC = () => {
             <div className="space-y-2.5">
               {CITATIONS.map((award, index) => (
                 <FadeIn key={award.id} delay={(index * 100 % 400) as any}>
-                  <HolographicCard className="flex items-center gap-3 px-4 py-3 bg-white/90 border border-border-neutral hover:shadow-md">
+                  <div className="relative overflow-hidden group flex items-center gap-3 px-4 py-3 bg-white/90 border border-border-neutral hover:shadow-md rounded-sm">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center w-8 h-8 bg-off-white rounded-sm group-hover:bg-charcoal group-hover:text-white transition-colors duration-300">
                         <award.icon className="w-4 h-4 text-battleship-gray group-hover:text-white transition-colors duration-300" />
@@ -40,7 +39,7 @@ const Honours: React.FC = () => {
                       </div>
                       <p className="text-xs text-charcoal-light leading-snug mt-0.5">{award.description}</p>
                     </div>
-                  </HolographicCard>
+                  </div>
                 </FadeIn>
               ))}
             </div>
@@ -48,7 +47,7 @@ const Honours: React.FC = () => {
 
           {/* Personal Attributes Column - Clean Document Style */}
           <FadeIn delay={200} className="h-full">
-            <HolographicCard className="bg-charcoal/85 text-white p-6 h-full relative rounded-sm shadow-xl">
+            <div className="relative overflow-hidden group bg-charcoal/85 text-white p-6 h-full rounded-sm shadow-xl">
               {/* Floating Service Commendations (Accolades) - Cross Bounds Effect */}
               <div className="absolute -top-5 -right-2 flex items-center z-20 pointer-events-auto">
                 {ACCOLADES.map((item, index) => (
@@ -83,7 +82,7 @@ const Honours: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </HolographicCard>
+            </div>
           </FadeIn>
         </div>
       </div>

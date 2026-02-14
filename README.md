@@ -29,7 +29,7 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 
 ```
 ├── components/          # React UI components
-│   ├── ui/              # Reusable primitives (HolographicCard, CompetencyCarousel)
+│   ├── ui/              # Reusable primitives (CompetencyCarousel)
 │   ├── Hero.tsx          # Hero section with profile + accolades
 │   ├── Competencies.tsx  # Competency carousel
 │   ├── ServiceRecord.tsx # Animated timeline of NZDF service

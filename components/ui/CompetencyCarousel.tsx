@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, useMotionValue, animate, PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import HolographicCard from './holographic-card';
+
 
 interface CompetencySlide {
     icon: React.ReactNode;
@@ -172,7 +172,7 @@ const CompetencyCarousel: React.FC<CompetencyCarouselProps> = ({ slides }) => {
                             aria-label={`${index + 1} of ${slides.length}: ${slide.title}`}
                         >
                             {/* Card — reuses glass-panel from index.html */}
-                            <HolographicCard className="glass-panel relative p-6 transition-all duration-300 hover:shadow-md group h-full bg-off-white hover:bg-white border-transparent hover:border-gray-200">
+                            <div className="glass-panel relative overflow-hidden p-6 transition-all duration-300 hover:shadow-md group h-full bg-off-white hover:bg-white border-transparent hover:border-gray-200 rounded-sm">
                                 {/* Header */}
                                 <div className="flex items-center justify-between mb-4 border-b border-border-neutral pb-3">
                                     <div className="flex items-center space-x-3">
@@ -189,7 +189,7 @@ const CompetencyCarousel: React.FC<CompetencyCarouselProps> = ({ slides }) => {
                                 <div className="font-body text-sm leading-relaxed text-charcoal-light">
                                     {slide.description}
                                 </div>
-                            </HolographicCard>
+                            </div>
                         </motion.div>
                     );
                 })}

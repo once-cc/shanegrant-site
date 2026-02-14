@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { SERVICE_RECORD } from '../constants';
 import { ServiceRole } from '../types';
 import FadeIn from './FadeIn';
-import HolographicCard from './ui/holographic-card';
+
 import { cn } from '../lib/utils';
 
 const ServiceRecord: React.FC = () => {
@@ -145,7 +145,7 @@ const ServiceRecord: React.FC = () => {
 
               {/* Service Card */}
               <div>
-                <HolographicCard
+                <div
                   onClick={() => openModal(record)}
                   className={cn(
                     "glass-panel p-8 cursor-pointer relative overflow-hidden group rounded-sm",
@@ -187,7 +187,7 @@ const ServiceRecord: React.FC = () => {
                       </span>
                     ))}
                   </div>
-                </HolographicCard>
+                </div>
               </div>
             </FadeIn>
           ))}
